@@ -1,0 +1,4 @@
+#!/bin/bash
+# Generates a puppet fact of the AD groups that have sshd access
+
+echo "sshdaduseraccess=`grep "AllowGroups" /etc/ssh/sshd_config | awk '{for(i=1;i<=NF;i++){if($i~/\S*\.\S*/){printf $i","}}}'`"| sed 's/,$//'

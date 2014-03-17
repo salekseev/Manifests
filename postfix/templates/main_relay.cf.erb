@@ -1,0 +1,125 @@
+#
+# /etc/postfix/main.cf template
+#
+# ******************************************************************
+# THIS FILE IS MANAGED BY PUPPET, ANY CHANGES MADE HERE WILL BE LOST
+# SEE DCOPS BEFORE MAKING ANY CHANGES. ALL ROLLBACKS COST $10.
+# ******************************************************************
+#
+myhostname                          = mail.<%= @datacenter %>.symnds.com
+smtpd_banner                        = $myhostname ESMTP
+mydestination                       = $myhostname, localhost.$mydomain, localhost
+relay_domains                       = $mydestination, symnds.net, symnds.com, symantec.com, nortonzone.com, norton.com
+mynetworks                          = 127.0.0.1/32, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16
+mydomain                            = symnds.com
+myorigin                            = $mydomain
+inet_interfaces                     = all
+debug_peer_level                    = 10
+
+smtpd_sender_restrictions           = permit_mynetworks,
+                                      check_sender_access hash:/etc/postfix/bypass_sender.map,
+                                      permit_sasl_authenticated,
+                                      reject_unknown_sender_domain,
+                                      reject_non_fqdn_sender,
+                                      permit
+
+smtpd_recipient_restrictions        = permit_mynetworks,
+                                      reject_invalid_hostname,
+                                      reject_non_fqdn_recipient,
+                                      check_recipient_access regexp:/etc/postfix/bypass_recipient.regexp,
+                                      reject_unknown_sender_domain,
+                                      reject_non_fqdn_sender,
+                                      check_recipient_access hash:/etc/postfix/bypass_recipient.map,
+                                      permit_mynetworks,
+                                      reject_unknown_recipient_domain,
+                                      reject_unauth_pipelining,
+                                      reject_unknown_sender_domain,
+                                      check_sender_access hash:/etc/postfix/bypass_sender.map,
+                                      check_client_access hash:/etc/postfix/client_access.map,
+                                      permit_sasl_authenticated,
+                                      reject_rbl_client zen.spamhaus.org,
+                                      reject_rbl_client cbl.abuseat.org,
+                                      reject_rbl_client combined.njabl.org,
+                                      reject_rbl_client spews.dnsbl.sorbs.net,
+                                      permit
+
+smtpd_relay_restrictions            = permit_mynetworks,
+                                      permit_sasl_authenticated,
+                                      check_sender_access hash:/etc/postfix/bypass_sender.map,
+                                      check_recipient_access hash:/etc/postfix/bypass_recipient.map,
+                                      reject_unknown_sender_domain,
+                                      reject_non_fqdn_sender,
+                                      check_relay_domains
+
+smtp_header_checks                  = pcre:/etc/postfix/smtp_header_checks.pcre
+header_checks                       = pcre:/etc/postfix/header_checks.pcre
+
+smtpd_data_restrictions             = reject_unauth_pipelining,
+                                      permit
+
+smtpd_helo_required                 = yes
+disable_vrfy_command                = yes
+
+transport_maps                      = hash:/etc/postfix/transport
+alias_database                      = hash:/etc/postfix/aliases
+alias_maps                          = hash:/etc/postfix/aliases
+
+smtpd_soft_error_limit              = 1
+smtpd_hard_error_limit              = 3
+smtpd_error_sleep_time              = 5
+debug_peer_level                    = 2
+mail_owner                          = postfix
+setgid_group                        = postdrop
+soft_bounce                         = no
+strict_rfc821_envelopes             = no
+unknown_local_recipient_reject_code = 550
+
+## TLS
+smtpd_use_tls                       = yes
+smtp_tls_note_starttls_offer        = yes
+smtpd_tls_auth_only                 = yes
+smtpd_tls_cert_file                 = /etc/postfix/ssl/mail.<%= @datacenter %>.symnds.com.pem
+smtpd_tls_key_file                  = /etc/postfix/ssl/mail.<%= @datacenter %>.symnds.com.key
+smtpd_tls_CAfile                    = /etc/postfix/ssl/verisign-standard-ssl-chain.pem
+smtpd_tls_loglevel                  = 1
+smtpd_tls_received_header           = yes
+tls_random_source                   = dev:/dev/urandom
+broken_sasl_auth_clients            = yes
+smtpd_sasl_auth_enable              = yes
+smtpd_sasl_authenticated_header     = yes
+smtpd_sasl_type                     = dovecot
+smtpd_sasl_path                     = private/auth
+smtpd_sasl_security_options         = noanonymous
+smtpd_tls_cipherlist                = HIGH:MEDIUM:+TLSv1:!SSLv2:+SSLv3
+smtp_tls_cipherlist                 = HIGH:MEDIUM:+TLSv1:!SSLv2:+SSLv3
+
+mailbox_size_limit                  = 0
+message_size_limit                  = 33554432
+bounce_size_limit                   = 1
+queue_minfree                       = 201326592
+default_process_limit               = 200
+local_destination_concurrency_limit = 10
+
+double_bounce_sender                = postmaster
+bounce_notice_recipient             = bit-bucket
+delay_notice_recipient              = bit-bucket
+error_notice_recipient              = bit-bucket
+empty_address_recipient             = bit-bucket
+
+bounce_queue_lifetime               = 30m
+maximal_queue_lifetime              = 1d
+
+command_directory                   = /usr/sbin
+config_directory                    = /etc/postfix
+daemon_directory                    = /usr/libexec/postfix
+data_directory                      = /var/lib/postfix
+mailq_path                          = /usr/bin/mailq.postfix
+newaliases_path                     = /usr/bin/newaliases.postfix
+queue_directory                     = /var/spool/postfix
+sendmail_path                       = /usr/sbin/sendmail.postfix
+
+smtpd_milters                       = inet:127.0.0.1:8891
+non_smtpd_milters                   = $smtpd_milters
+milter_default_action               = accept
+
+### EOF

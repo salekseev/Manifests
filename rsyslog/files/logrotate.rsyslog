@@ -1,0 +1,25 @@
+/data/syslog/boot
+/data/syslog/emerg.log
+/data/syslog/cron
+/data/syslog/secure
+/data/syslog/nonindexedmessages
+/data/syslog/messages
+/data/syslog/maillog
+/data/syslog/dhcpd.log
+{
+    copytruncate
+    daily
+    rotate 7
+    compress
+    missingok
+}
+
+
+/data/syslog/network/*.log
+{
+    copytruncate
+    daily
+    rotate 365
+    compress
+    missingok
+}

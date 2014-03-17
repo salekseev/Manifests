@@ -1,0 +1,13 @@
+#!/bin/sh                                                                                                                                                                                                                                                                                                                                                                   
+
+cd /etc/puppet/env
+
+for i in "pup/nds.git" "wat/puppet.git" "pup/dev-zone.git"
+
+do
+  git pull --force ssh://git@git.symnds.net:7999/$i
+done
+
+
+exit 0
+### EOF

@@ -1,0 +1,2 @@
+default._domainkey	IN	TXT	( "v=DKIM1; k=rsa; "
+	  "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDImiBX7nNIZhXS3FK5wNgF7uNrF3FCztzutu7crv0BV5VYlnvMuNdI2JUtfQQXhITIDoJHgrded1jVNOCGOO9geGazfmUecEwWhPT6ypWStjuQhi6GR9Bl31ad5f9EZOO1xobnXsPtaGcn4uFdU1XXu+fWpi7DiZm9heJtGd42XQIDAQAB" )  ; ----- DKIM key default for nortonzone.com

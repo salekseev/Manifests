@@ -1,0 +1,31 @@
+[monitor:///var/www/apps/nobu/shared/log/notifications_production.log]
+index = nobu_beta
+sourcetype=rails
+
+[monitor:///var/www/apps/nobu/shared/log/aol_production.log]
+index = nobu_beta
+sourcetype=rails
+
+[monitor:///var/www/apps/nobu/shared/log/sso_production.log]
+index = nobu_beta
+sourcetype=rails
+
+[monitor:///var/www/apps/nobu/shared/log/ebe_production.log]
+index = nobu_beta
+sourcetype=rails
+
+[monitor:///var/www/apps/nobu/shared/log/*]
+index = nobu_beta
+sourcetype=rails
+
+[monitor:///var/log/nds/nobu_errors.log]
+index = nobu_beta
+sourcetype=rails
+
+[monitor:///var/log/httpd/nobu.backup.com_access.log]
+index = nobu_beta
+sourcetype=access_combined
+
+[monitor:///var/log/httpd/nobu.backup.com_error.log]
+index = nobu_beta
+sourcetype=apache_error

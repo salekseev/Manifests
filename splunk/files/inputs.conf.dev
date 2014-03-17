@@ -1,0 +1,74 @@
+[monitor:///usr/local/apache-tomcat/logs/access.log]
+index = zone_dev
+
+[monitor:///usr/local/apache-tomcat/logs/catalina.out]
+index = zone_dev
+
+[monitor:///usr/local/tomcat/logs/access.log]
+index = zone_dev
+
+[monitor:///usr/local/tomcat/logs/catalina.out]
+index = zone_dev
+
+[monitor:///var/log/zone/*]
+index = zone_dev
+
+[monitor:///var/solr/log/*]
+index = zone_dev
+
+# new locations
+
+[monitor:///var/log/nds/multiservice.log]
+index = zone_dev
+
+[monitor:///var/log/nds/nos.log]
+index = zone_dev
+
+[monitor:///var/log/nds/snsweb.log]
+index = zone_dev
+
+[monitor:///var/log/nds/spoc/coherence-spoc.log]
+index = zone_dev
+
+[monitor:///var/log/nds/syncservice.log]
+index = zone_dev
+
+[monitor:///var/log/nds/fileservice.log]
+index = zone_dev
+
+[monitor:///var/log/nds/access.log]
+index = zone_dev
+
+[monitor:///var/log/nds/catalina.out]
+index = zone_dev
+
+[monitor:///var/log/nds/multi.log]
+index = zone_dev
+
+[monitor:///var/log/nds/coherence-out-spoc.log]
+index = zone_dev
+
+[monitor:///var/log/nds/coherence-proxy-out-spoc.log]
+index = zone_dev
+
+[monitor:///var/log/nds/spoc.log]
+index = zone_dev
+
+[monitor:///var/log/nds/coherence-spoc.log]
+index = zone_dev
+
+[monitor:///var/log/nds/rmq_spocmon.log]
+index = zone_dev
+
+[monitor:///var/log/nds/couchbase_mon.log]
+index = zone_dev
+
+[monitor:///var/log/nds/log_uploader.log]
+index = zone_dev
+
+[monitor:///var/log/nds/zonelogs_cron.log]
+index = zone_dev
+
+# catch all
+[monitor:///var/log/nds/*]
+index=the_lost

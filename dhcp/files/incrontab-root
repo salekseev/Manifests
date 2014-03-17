@@ -1,0 +1,1 @@
+/etc/dhcp IN_MODIFY,IN_DELETE,IN_CLOSE_WRITE,IN_NO_LOOP /usr/local/sbin/restart-dhcpd

@@ -1,0 +1,3 @@
+/dev/vx/dsk/splunk_flashdg/splunk_flash_vol discovered_direct_iosz=2048k
+/dev/vx/dsk/splunk_sasdg/splunk_sas_vol     discovered_direct_iosz=2048k
+/dev/vx/dsk/splunk_satadg/splunk_sata_vol   discovered_direct_iosz=2048k

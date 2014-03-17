@@ -1,0 +1,50 @@
+// Global
+zone "symnds.net"          IN { type slave; file "slave/symnds.net";          check-names ignore; masters { 10.116.196.11; 10.176.196.11; 10.150.196.11; }; };
+
+// ACC4
+zone "acc4.symnds.net"     IN { type slave; file "slave/acc4.symnds.net";     check-names ignore; masters { 10.116.196.13; 10.116.196.14; }; };
+zone "116.10.in-addr.arpa" IN { type slave; file "slave/116.10.in-addr.arpa"; check-names ignore; masters { 10.116.196.13; 10.116.196.14; }; };
+zone "117.10.in-addr.arpa" IN { type slave; file "slave/117.10.in-addr.arpa"; check-names ignore; masters { 10.116.196.13; 10.116.196.14; }; };
+zone "118.10.in-addr.arpa" IN { type slave; file "slave/118.10.in-addr.arpa"; check-names ignore; masters { 10.116.196.13; 10.116.196.14; }; };
+zone "119.10.in-addr.arpa" IN { type slave; file "slave/119.10.in-addr.arpa"; check-names ignore; masters { 10.116.196.13; 10.116.196.14; }; };
+
+// ACC5
+zone "acc5.symnds.net"     IN { type slave; file "slave/acc5.symnds.net";     check-names ignore; masters { 10.176.196.13; 10.176.196.14; }; };
+zone "176.10.in-addr.arpa" IN { type slave; file "slave/176.10.in-addr.arpa"; check-names ignore; masters { 10.176.196.13; 10.176.196.14; }; };
+zone "177.10.in-addr.arpa" IN { type slave; file "slave/177.10.in-addr.arpa"; check-names ignore; masters { 10.176.196.13; 10.176.196.14; }; };
+zone "178.10.in-addr.arpa" IN { type slave; file "slave/178.10.in-addr.arpa"; check-names ignore; masters { 10.176.196.13; 10.176.196.14; }; };
+zone "179.10.in-addr.arpa" IN { type slave; file "slave/179.10.in-addr.arpa"; check-names ignore; masters { 10.176.196.13; 10.176.196.14; }; };
+
+
+// ST2
+zone "st2.symnds.net"      IN { type slave; file "slave/st2.symnds.net";      check-names ignore; masters { 10.150.196.13; 10.150.196.14; }; };
+zone "150.10.in-addr.arpa" IN { type slave; file "slave/150.10.in-addr.arpa"; check-names ignore; masters { 10.150.196.13; 10.150.196.14; }; };
+
+
+// FORWARDERS FOR SYMANTEC CORPORATE
+zone "ges.symantec.com"        IN { type forward; forwarders { 192.168.41.31; 192.168.41.32; }; };
+zone "enterprise.veritas.com"  IN { type forward; forwarders { 192.168.41.31; 192.168.41.32; }; };
+zone "vxindia.veritas.com"     IN { type forward; forwarders { 192.168.41.31; 192.168.41.32; }; };
+zone "engba.symantec.com"      IN { type forward; forwarders { 192.168.41.31; 192.168.41.32; }; };
+zone "qalabs.symantec.com"     IN { type forward; forwarders { 192.168.41.31; 192.168.41.32; }; };
+zone "corp.symantec.com"       IN { type forward; forwarders { 192.168.41.31; 192.168.41.32; }; };
+zone "symad.symantec.com"      IN { type forward; forwarders { 192.168.41.31; 192.168.41.32; }; };
+zone "symc.symantec.com"       IN { type forward; forwarders { 192.168.41.31; 192.168.41.32; }; };
+
+// LEGACY FORWARDERS FOR OLD INFRASTRUCTURE
+zone "atbackup.local"          IN { type forward; forwarders { 192.168.40.113; 192.168.40.114; 192.168.43.103; }; };
+zone "bb.local"                IN { type forward; forwarders { 10.70.10.1; 10.70.10.2; }; }; 
+zone "ds.local"                IN { type forward; forwarders { 10.60.10.1; 10.60.10.2; 10.62.10.3; 10.62.10.4; }; };
+zone "ds-london.local"         IN { type forward; forwarders { 10.54.10.1; 10.54.10.2; 10.54.10.3; }; };
+zone "qc.local"                IN { type forward; forwarders { 10.30.10.1; 10.30.10.2; }; };
+zone "sd.local"                IN { type forward; forwarders { 192.168.41.31; 192.168.10.12; 192.168.41.32; }; };
+zone "sd-london.local"         IN { type forward; forwarders { 192.168.44.11; 192.168.44.12; }; };
+zone "swapdev.com"             IN { type forward; forwarders { 192.168.41.36; 155.64.215.70; 10.11.20.55; }; };
+zone "swapdrive-prod.com"      IN { type forward; forwarders { 192.168.40.43; 192.168.40.44; }; };
+zone "sym.local"               IN { type forward; forwarders { 10.40.10.1; 10.40.10.2; 10.40.10.4; 10.40.10.5; 10.42.10.8; 10.42.10.11; }; };
+zone "stg.local"               IN { type forward; forwarders { 10.10.200.10; }; };
+zone "40.168.192.in-addr.arpa" IN { type forward; forwarders { 191.168.40.113; 192.168.40.114; 192.168.40.103; }; };
+zone "41.168.192.in-addr.arpa" IN { type forward; forwarders { 191.168.40.113; 192.168.40.114; 192.168.40.103; }; };
+zone "42.168.192.in-addr.arpa" IN { type forward; forwarders { 191.168.40.113; 192.168.40.114; 192.168.40.103; }; };
+zone "43.168.192.in-addr.arpa" IN { type forward; forwarders { 191.168.40.113; 192.168.40.114; 192.168.40.103; }; };
+zone "40.10.in-addr.arpa"      IN { type forward; forwarders { 10.40.10.1; 10.40.10.2; 10.40.10.4; 10.40.10.5; 10.42.10.8; 10.42.10.11; }; };

@@ -1,0 +1,11 @@
+family@norton.com        discard:
+noreply@nortonzone.com   discard:
+no-reply@nortonzone.com  discard:
+noreply@nobu.backup.com  discard:
+no-reply@nobu.backup.com discard:
+testdomain.com           discard:
+test.com                 discard:
+test.net                 discard:
+symnds.net               smtp:[mgt-mailbox1.st2.symnds.net]
+symnds.com               smtp:[mgt-mailbox1.st2.symnds.net]
+nortonzone.com           smtp:[mgt-mailbox1.st2.symnds.net]

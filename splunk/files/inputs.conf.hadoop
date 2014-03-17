@@ -1,0 +1,2 @@
+[monitor:///var/log/flume-ng/flume.log]
+index = hadoop_flume

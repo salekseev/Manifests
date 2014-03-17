@@ -1,0 +1,19 @@
+
+______________________________________________________________________
+[                                                                    ]
+[ BEFORE YOU MAKE ANY CHANGES TO THIS SERVER, PLEASE READ THE        ]
+[ FOLLOWING DOC:                                                     ]
+[                                                                    ]
+[ https://confluence.symnds.com/display/DOC/Splunk+V5                ]
+[                                                                    ]
+[ This server is in a search head pool. All changes such as          ]
+[ installing new Splunk apps, making Splunk config changes etc       ]
+[ should be performed from the web interface. If in doubt, please    ]
+[ consult the Splunk team.                                           ]
+[                                                                    ]
+[ To restart Splunk on this search head, run the following command:  ]
+[                                                                    ]
+[   # splunk restart                                                 ]
+[                                                                    ]
+______________________________________________________________________
+

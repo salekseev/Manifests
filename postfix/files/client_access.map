@@ -1,0 +1,11 @@
+#
+# /etc/postfix/client_access.map
+#
+# ******************************************************************
+# THIS FILE IS MANAGED BY PUPPET, ANY CHANGES MADE HERE WILL BE LOST
+# SEE DCOPS BEFORE MAKING ANY CHANGES. ALL ROLLBACKS COST $10.
+# ******************************************************************
+#
+# This file must be "compiled" with "postmap"
+
+### EOF

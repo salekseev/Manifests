@@ -1,0 +1,38 @@
+[default]
+host = <%= @fqdn %>
+
+[monitor:///data/syslog/zone_apps.log]
+index=zone
+disabled = false
+
+[monitor:///data/syslog/messages]
+disabled = false
+
+[monitor:///data/syslog/audit/secure/]
+index=auth
+disabled = false
+
+[monitor:///data/syslog/secure]
+index=auth
+disabled = false
+
+[monitor:////data/syslog/nobu/web_logs.log]
+index=nobu
+disabled = false
+
+[monitor:////data/syslog/nobu/rails.log]
+sourcetype=rails
+index=nobu_rails
+disabled = false
+
+[monitor:////data/syslog/wos.log]
+index=wos
+disabled = false
+
+[monitor:////data/syslog/nobu/pele.log]
+index=nobu
+disabled = false
+
+[monitor:////data/syslog/lb.log]
+index=lb_health
+disabled = false

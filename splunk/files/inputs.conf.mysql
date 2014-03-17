@@ -1,0 +1,3 @@
+[monitor:///var/log/mysql[0-9]*.err]
+index=mysql_err
+sourcetype=mysqld_error

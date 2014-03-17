@@ -1,0 +1,31 @@
+### /etc/sshd/sshd_config
+Port 22
+Protocol 2
+
+### Logging
+SyslogFacility AUTHPRIV
+LogLevel INFO
+
+### Authentication:
+LoginGraceTime 2m
+PermitRootLogin yes
+PasswordAuthentication yes
+ChallengeResponseAuthentication no
+UsePAM yes
+
+### Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL
+X11Forwarding yes
+TCPKeepAlive yes
+UsePrivilegeSeparation yes
+UseDNS no
+MaxStartups 30
+
+### SFTP
+Subsystem       sftp    internal-sftp
+
+### No IPV6
+AddressFamily inet
+

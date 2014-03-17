@@ -1,0 +1,20 @@
+
+______________________________________________________________________
+[                                                                    ]
+[ BEFORE YOU MAKE ANY CHANGES TO THIS SERVER, PLEASE READ THE        ]
+[ FOLLOWING DOC:                                                     ]
+[                                                                    ]
+[ https://confluence.symnds.com/display/DOC/Splunk+V5                ]
+[                                                                    ]
+[ PLEASE DON'T MODIFY THE SPLUNK CONFIG FILE LOCALLY ON THIS SERVER. ]
+[ ALL SPLUNK RELATED CONFIG FILES FOR THE INDEXERS ARE MANAGED       ]
+[ CENTRALLY ON THE SPLUNK MASTER SERVER. IF IN DOUBT, PLEASE CONSULT ]
+[ THE SPLUNK TEAM.                                                   ]
+[                                                                    ]
+[ To restart Splunk on this indexer, run the following command:      ]
+[                                                                    ]
+[   1) splunk offline                                                ]
+[   2) splunk start                                                  ]
+[                                                                    ]
+______________________________________________________________________
+

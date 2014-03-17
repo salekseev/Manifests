@@ -1,0 +1,3 @@
+[main]
+server = puppetdb.acc5.symnds.net
+port = 8082

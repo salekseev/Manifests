@@ -1,0 +1,60 @@
+// named.conf
+// Host: <%= @fqdn %>
+// WARNING: This file is managed by puppet, any changes made here will be lost.
+
+options {
+    directory "/var/named";
+    version "get lost";
+    max-journal-size 50k;
+    max-cache-ttl 86400;
+    max-ncache-ttl 60;
+    minimal-responses yes;
+    allow-transfer { none; };
+    listen-on {
+        <%= @ipaddress %>;
+    };
+    zone-statistics yes;
+    listen-on-v6 { none; };
+    allow-update { none; };
+    resolver-query-timeout 8;
+    recursion yes;
+    allow-recursion {
+        127.0.0.1/8;
+    };
+    disable-empty-zone ".";
+    empty-zones-enable no;
+};
+
+logging {
+    // Channels
+    channel sym_security { file "/var/log/named/security.log"      versions 5 size 100m; severity info; print-severity yes; print-time yes; print-category yes; };
+    channel sym_notify   { file "/var/log/named/notify.log"        versions 5 size 100m; severity info; print-severity yes; print-time yes; print-category yes; };
+    channel sym_ddns     { file "/var/log/named/ddns.log"          versions 5 size 100m; severity info; print-severity yes; print-time yes; print-category yes; };
+    channel sym_ddnssec  { file "/var/log/named/ddns-security.log" versions 5 size 100m; severity info; print-severity yes; print-time yes; print-category yes; };
+    channel sym_xfers    { file "/var/log/named/xfer.log"          versions 5 size 100m; severity info; print-severity yes; print-time yes; print-category yes; };
+    channel sym_log      { file "/var/log/named/named.log"         versions 5 size 100m; severity info; print-severity yes; print-time yes; print-category yes; };
+
+    // Categories
+    category config          { sym_log;      };
+    category database        { sym_log;      };
+    category default         { sym_log;      };
+    category general         { sym_log;      };
+    category lame-servers    { null;         };
+    category security        { sym_security; };
+    category update          { sym_ddns;     };
+    category update-security { sym_ddnssec;  };
+    category xfer-in         { sym_xfers;    };
+    category xfer-out        { sym_xfers;    };
+};
+
+zone "." {
+    type hint;
+    file "root.servers";
+};
+
+// RNDC configuration
+key "rndc-key" {
+        algorithm hmac-md5;
+        secret "xfqV7EoBa7GNMIa5X7NyRwPcLNRrzHHzrVeCw/GFUa3/Wj49maMsWsdHIYEhq0e7OQEv93hcc46/lJCG1fAXzA==";
+};
+

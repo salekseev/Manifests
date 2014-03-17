@@ -1,0 +1,14 @@
+<% if @fqdn =~ /^mgt-extvendor1.acc4.symnds.net/ %>
+Match User aoldrop
+  ChrootDirectory /home/aoldrop
+  AllowTCPForwarding no
+  X11Forwarding no
+  ForceCommand internal-sftp
+
+Match User sscdrop
+  ChrootDirectory /home/sscdrop
+  AllowTCPForwarding no
+  X11Forwarding no
+  ForceCommand internal-sftp
+<% end -%>
+

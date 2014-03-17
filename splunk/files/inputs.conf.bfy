@@ -1,0 +1,192 @@
+[monitor:///usr/local/apache-tomcat/logs/*]
+disabled = false
+followTail = 0
+recursive = true
+index=backupify-apps
+
+[monitor:///var/log/bfy/nos.log]
+index=backupify-apps
+
+[monitor:///var/log/bfy/access.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/catalina.out]
+index = backupify-apps
+
+[monitor:///var/log/bfy/multi.log]
+index = backupify-apps
+
+[monitor:///var/log/messages]
+index = backupify-apps
+
+[monitor:///var/log/bfy/apache-rewrite.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/cassandra-system.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/facebook-soa-apache-access.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/facebook-soa-apache-error.log]
+index = backupify-apps
+sourcetype=apache_error
+
+[monitor:///var/log/bfy/facebook-soa-dev1.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/gmail-soa-apache-access.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/gmail-soa-apache-error.log]
+index = backupify-apps
+sourcetype=apache_error
+
+[monitor:///var/log/bfy/gmail-soa-dev1.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/monit.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/resque-pool-facebook.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/resque-pool-gmail.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/resque-pool-twitter.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/storage-apache-access.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/storage-apache-error.log]
+index = backupify-apps
+sourcetype=apache_error
+
+[monitor:///var/log/bfy/twitter-soa-apache-access.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/twitter-soa-apache-error.log]
+index = backupify-apps
+sourcetype=apache_error
+
+[monitor:///var/log/bfy/twitter-soa-dev1.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/web-apache-access.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/web-apache-error.log]
+index = backupify-apps
+sourcetype=apache_error
+
+[monitor:///var/log/bfy/web-dev1.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/startup.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/collectd.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/cassandra-gc.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/production.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/storage-production.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/twitter-soa-production.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/haproxy.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/gmail-soa-production.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/facebook-soa-production.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/web-production.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/twitter-soa-test.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/redis-server.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/redis-node-manager.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/zookeeper.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/zookeeper.log.1]
+index = backupify-apps
+
+[monitor:///var/log/bfy/graphite-apache-access.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/graphite-apache-error.log]
+index = backupify-apps
+sourcetype=apache_error
+
+[monitor:///var/log/bfy/resque-scheduler-twitter.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/resque-scheduler-gmail.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/resque-scheduler-facebook.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/web-dev3.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/twitter-soa-dev3.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/storage-dev3.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/gmail-soa-dev3.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/facebook-soa-dev3.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/twitter-soa-dev2.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/web-dev2.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/storage-dev2.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/gmail-soa-dev2.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/facebook-soa-dev2.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/storage-dev1.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/dev1.log]
+index = backupify-apps
+
+[monitor:///var/log/bfy/facebook-production.log]
+index = backupify-apps
+
+
+
+# catch all
+[monitor:///var/log/bfy/*]
+index=the_lost
+~

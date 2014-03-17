@@ -1,0 +1,8 @@
+# To use this file, uncomment the #KeyTable option in /etc/opendkim.conf,
+# then uncomment the following line and replace example.com with your domain
+# name, then restart OpenDKIM. Additional keys may be added on separate lines.
+
+#default._domainkey.example.com example.com:default:/etc/opendkim/keys/default.private
+
+default._domainkey.symnds.com symnds.com:default:/etc/opendkim/keys/symnds.com/default
+default._domainkey.nortonzone.com nortonzone.com:default:/etc/opendkim/keys/nortonzone.com/default

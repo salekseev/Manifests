@@ -1,0 +1,1 @@
+* * * * * root cd /tmp && /usr/bin/iostat -xkd 30 2 | sed 's/,/\./g' > io.tmp && mv io.tmp iostat.cache 1> /dev/null 2> /dev/null

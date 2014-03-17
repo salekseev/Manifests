@@ -1,0 +1,900 @@
+# /etc/dhcp/dhcpd.conf for <%= datacenter %>
+# Hostname: <%= fqdn %>
+#
+# WARNING: This file is managed by PUPPET, any changes made will be lost!
+#
+authoritative;
+ddns-update-style none;
+#ignore client-updates;
+allow booting;
+allow bootp;
+log-facility local6;
+
+
+option option-176 code 176 = string;
+option option-242 code 242 = string;
+
+### Omapi key for remote API access
+key omapi_key {
+    algorithm HMAC-MD5;
+        secret "L0xUoWjkMoCYHv6FIFjXvMpBTCqM7PAaydlPlnwAGL5PlXwTvkrnp/qYsmfIQD1PVFy3KckjdBdgPBpyOX75Kw==";
+};
+omapi-port 7911;
+omapi-key omapi_key;
+
+group st2-cobbler {
+    filename "/pxelinux.0";
+    next-server 10.125.140.25;
+}
+
+Subnet 10.11.0.0 netmask 255.255.0.0   {
+        range 10.11.199.1 10.11.199.254;  # 10.11.0.0/16-DEV.ST2
+        option subnet-mask              255.255.0.0;
+        option routers                  10.11.1.4;
+        option domain-name              "sd.local";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.125.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+Subnet 10.30.0.0 netmask 255.255.0.0   {
+        range 10.30.199.1 10.30.199.254;  # 10.30.0.0/16-QC.ST2
+        option subnet-mask              255.255.0.0;
+        option routers                  10.30.1.4;
+        option domain-name              "qc.local";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.125.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+Subnet 10.40.0.0 netmask 255.255.0.0   {
+        range 10.40.199.1 10.40.199.254;  # 10.40.0.0/16-SYM.ST2
+        option subnet-mask              255.255.0.0;
+        option routers                  10.40.1.4;
+        option domain-name              "sym.local";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.125.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+Subnet 10.60.0.0 netmask 255.255.0.0   {
+        range 10.60.199.1 10.60.199.254;  # 10.60.0.0/16-DS.ST2
+        option subnet-mask              255.255.0.0;
+        option routers                  10.60.1.4;
+        option domain-name              "ds.local";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.125.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+Subnet 10.150.152.0 netmask 255.255.252.0   {
+        range 10.150.155.1 10.150.155.10;  # 10.150.152.0/22-SHARED-BO.ST2
+        option subnet-mask              255.255.252.0;
+        option routers                  10.150.152.1;
+        option domain-name              "symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.125.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+
+Subnet 10.150.196.0 netmask 255.255.252.0   {
+        range 10.150.199.225 10.150.199.250;
+        option subnet-mask              255.255.252.0;
+        option routers                  10.150.196.1;
+        option domain-name              "symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.125.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+
+Subnet 192.168.10.0 netmask 255.255.255.0   {
+        range 192.168.10.200 192.168.10.205;
+        option subnet-mask              255.255.255.0;
+        option routers                  192.168.10.4;
+        option domain-name              "sd.local";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.125.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### ST2 Require DHCP Subnet for DHCP Server
+Subnet 10.125.140.0 netmask 255.255.252.0 {
+        range 10.125.143.244 10.125.143.254;
+        option subnet-mask              255.255.252.0;
+        option routers                  10.125.140.1;
+        option domain-name              "st2.symnds.net symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # EST
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time 7200;
+        max-lease-time 14400;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### ST2 10.125.182.0
+Subnet 10.125.182.0 netmask 255.255.255.0 {
+        range 10.125.182.204 10.125.182.244;
+        option subnet-mask              255.255.255.0;
+        option routers                  10.125.182.1;
+        option domain-name              "st2.symnds.net symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # EST
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time 7200;
+        max-lease-time 14400;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### ST2 Require DHCP Subnet for DHCP Server
+Subnet 10.125.20.0 netmask 255.255.255.0 {
+        range 10.125.20.240 10.125.20.254;
+        option subnet-mask              255.255.255.0;
+        option routers                  10.125.20.5;
+        option domain-name              "st2.symnds.net symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # EST
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time 7200;
+        max-lease-time 14400;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### ST2 New Build
+Subnet 10.125.9.0 netmask 255.255.255.0 {
+        range 10.125.9.20 10.125.9.254;
+        option subnet-mask              255.255.255.0;
+        option routers                  10.125.9.1;
+        option domain-name              "st2.symnds.net symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # EST
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time 7200;
+        max-lease-time 14400;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Dell VM Rack in ST2 / ToR-7C8.ST2 / Prod / VLAN 2200
+Subnet 10.125.144.0 netmask 255.255.254.0 {                            # ToR-7C8.ST2
+        range 10.125.145.240 10.125.145.254;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.144.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;                     # Eastern Standard Time
+        option ntp-servers                 10.125.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time                 600;
+        max-lease-time                     900;
+        next-server                        10.117.144.17;
+        filename                           "BStrap\\x64\\Bstrap.0";
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+         #   filename                       "undionly.kpxe";
+		 filename                       "BStrap\\x64\\Bstrap.0";
+        }
+}
+
+Subnet 10.125.180.0 netmask 255.255.255.0 {
+        range 10.125.180.20 10.125.180.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.180.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+}
+
+Subnet 10.125.181.0 netmask 255.255.255.0 {
+        range 10.125.181.20 10.125.181.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.181.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+}
+
+
+Subnet 10.119.32.0 netmask 255.255.255.0  {
+        range 10.119.32.240 10.119.32.250;
+        option subnet-mask              255.255.255.0;
+        option routers                  10.119.32.1;
+        option domain-name              "acc4lab.local";
+        option domain-name-servers      10.117.6.23, 10.125.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.117.6.23, 10.125.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+
+Subnet 10.125.132.0 netmask 255.255.255.0  {
+        range 10.125.132.240 10.125.132.250;
+        option subnet-mask              255.255.255.0;
+        option routers                  10.125.132.1;
+        option domain-name              "acc4lab.local";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.125.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+
+Subnet 10.179.32.0 netmask 255.255.255.0  {
+        range 10.179.32.240 10.179.32.250;
+        option subnet-mask              255.255.255.0;
+        option routers                  10.179.32.1;
+        option domain-name              "acc4lab.local";
+        option domain-name-servers      10.177.6.23, 10.117.6.23;
+        option time-offset              -18000;                         # Eastern Standard Time
+        option ntp-servers              10.177.6.23, 10.117.6.23;   # Default NTP server to be used by DHCP clients
+        default-lease-time 21600;
+        max-lease-time 43200;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+
+### Rack 1, VLAN 3000
+Subnet 10.125.164.0 netmask 255.255.255.0 {
+        range 10.125.164.20 10.125.164.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.164.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        #next-server                        10.117.140.26;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+                        filename                       "undionly.kpxe";
+        }
+}
+
+### Rack 2, VLAN 3000
+Subnet 10.125.165.0 netmask 255.255.255.0 {
+        range 10.125.165.150 10.125.165.250;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.165.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        next-server                        10.117.140.26;
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+            filename                       "undionly.kpxe";
+        }
+}
+
+### Rack 2, VLAN 2300
+Subnet 10.125.146.0 netmask 255.255.254.0 {
+        range 10.125.147.230 10.125.147.250;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.146.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 2, VLAN 2100
+Subnet 10.125.46.0 netmask 255.255.254.0 {
+        range 10.125.47.230 10.125.47.250;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.46.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 3, VLAN 2100
+Subnet 10.125.48.0 netmask 255.255.254.0 {
+        range 10.125.49.230 10.125.49.250;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.48.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 3, VLAN 3000
+Subnet 10.125.166.0 netmask 255.255.255.0 {
+        range 10.125.166.150 10.125.166.250;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.166.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+            filename                       "BStrap\\x64\\Bstrap.0";
+        }
+}
+
+### Rack 3, VLAN 2500
+Subnet 10.125.244.0 netmask 255.255.255.0 {
+        range 10.125.244.240 10.125.244.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.244.1;
+        option domain-name                 "acc4.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+
+### Rack 3, VLAN 2400
+Subnet 10.125.228.0 netmask 255.255.254.0 {
+        range 10.125.228.100 10.125.228.250;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.228.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+
+### Rack 3, VLAN 2300
+Subnet 10.125.148.0 netmask 255.255.254.0 {
+        range 10.125.149.230 10.125.149.250;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.148.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        #next-server                        10.125.140.25;	### Cobbler for now
+        #filename                           "/pxelinux.0";
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 4, VLAN 3000
+Subnet 10.125.167.0 netmask 255.255.255.0 {
+        range 10.125.167.150 10.125.167.210;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.167.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        next-server                        10.117.140.26;
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+            filename                       "undionly.kpxe";
+        }
+}
+
+### Rack 4, VLAN 2100
+Subnet 10.125.50.0 netmask 255.255.254.0 {
+        range 10.125.51.240 10.125.51.254;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.50.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.177.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.177.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 4, VLAN 2300
+Subnet 10.125.150.0 netmask 255.255.254.0 {
+        range 10.125.151.240 10.125.151.254;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.150.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.177.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.177.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 4, VLAN 2400
+Subnet 10.125.230.0 netmask 255.255.254.0 {
+        range 10.125.231.240 10.125.231.254;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.230.1;
+        option domain-name                 "acc4.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.177.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.177.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 6, VLAN 3000
+Subnet 10.125.168.0 netmask 255.255.255.0 {
+        range 10.125.168.150 10.125.168.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.168.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        next-server                        10.117.140.26;
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+            filename                       "undionly.kpxe";
+        }
+}
+
+### Rack 6, VLAN 2100
+Subnet 10.125.52.0 netmask 255.255.254.0 {
+        range 10.125.53.240 10.125.53.254;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.52.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.177.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.177.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 6, VLAN 2300
+Subnet 10.125.152.0 netmask 255.255.254.0 {
+        range 10.125.153.240 10.125.153.254;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.152.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.177.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.177.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 6, VLAN 2400
+Subnet 10.125.232.0 netmask 255.255.254.0 {
+        range 10.125.233.240 10.125.233.254;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.232.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.177.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.177.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 6, VLAN 2500
+Subnet 10.125.246.0 netmask 255.255.254.0 {
+        range 10.125.247.240 10.125.247.254;
+        option subnet-mask                 255.255.254.0;
+        option routers                     10.125.246.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.177.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.177.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### Rack 7, VLAN 3000
+Subnet 10.125.169.0 netmask 255.255.255.0 {
+        range 10.125.169.150 10.125.169.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.169.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        next-server                        10.117.140.26;
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+            filename                       "undionly.kpxe";
+        }
+}
+
+### Rack 8, VLAN 3000
+Subnet 10.125.170.0 netmask 255.255.255.0 {
+        range 10.125.170.150 10.125.170.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.170.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        next-server                        10.117.140.26;
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+            filename                       "undionly.kpxe";
+        }
+}
+
+### Rack 9, VLAN 3000
+Subnet 10.125.171.0 netmask 255.255.255.0 {
+        range 10.125.171.150 10.125.171.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.171.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        next-server                        10.117.140.26;
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+            filename                       "undionly.kpxe";
+        }
+}
+
+### Rack 10, VLAN 3000
+Subnet 10.125.172.0 netmask 255.255.255.0 {
+        range 10.125.172.150 10.125.172.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.172.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        next-server                        10.117.140.26;
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+            filename                       "undionly.kpxe";
+        }
+}
+
+### Rack 11, VLAN 3000
+Subnet 10.125.173.0 netmask 255.255.255.0 {
+        range 10.125.173.150 10.125.173.254;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.173.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        next-server                        10.117.140.26;
+
+        ### HTTP boot only if we have already chained gPxe
+        if exists user-class and option user-class = "iPXE" {
+            filename                       "http://10.117.140.26/boot.gpxe";
+        } else {
+            filename                       "undionly.kpxe";
+        }
+}
+
+### ST2 PCI Scopes
+Subnet 10.125.248.0 netmask 255.255.255.0 {
+        range 10.125.248.230 10.125.248.250;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.248.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+Subnet 10.125.249.0 netmask 255.255.255.0 {
+        range 10.125.249.230 10.125.249.250;
+        option subnet-mask                 255.255.255.0;
+        option routers                     10.125.249.1;
+        option domain-name                 "st2.symnds.net";
+        option domain-name-servers         10.125.6.23, 10.117.6.23;
+        option time-offset                 -18000;
+        option ntp-servers                 10.125.6.23, 10.117.6.23;
+        default-lease-time                 300;
+        max-lease-time                     600;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### ST2 LAB, VLAN 3100
+Subnet 10.125.128.0 netmask 255.255.252.0   {
+        range 10.125.131.100 10.125.131.254;
+        option subnet-mask              255.255.252.0;
+        option routers                  10.125.128.1;
+        option domain-name              "st2.symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time 900;
+        max-lease-time 3200;
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### ST2 RACK #5, MGMT/OOB, Cobbler only 
+Subnet 10.124.176.0 netmask 255.255.252.0   {
+        range 10.124.177.210 10.124.177.254;
+        option subnet-mask              255.255.252.0;
+        option routers                  10.124.176.1;
+        option domain-name              "st2.symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time 3600;
+        max-lease-time 14400;
+
+        next-server 10.125.140.25;
+        filename "/pxelinux.0";
+}
+
+### ST2 RACK ToR-7C5.ST2, VLAN 2050 MGMT
+Subnet 10.125.40.0 netmask 255.255.255.0   {
+        range 10.125.40.210 10.125.40.254;
+        option subnet-mask              255.255.255.0;
+        option routers                  10.125.40.1;
+        option domain-name              "st2.symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time 3600;
+        max-lease-time 14400;
+
+        option vendor-encapsulated-options       06:01:0B:08:07:AA:AA:01:0A:7D:90:11:00;
+        option vendor-class-identifier          "PXEClient";
+        next-server                              10.125.144.17;
+        filename                                "BStrap\\x64\\Bstrap.0";
+}
+
+### ST2 RACK ToR-7C5.ST2, VLAN 3000 OOB
+Subnet 10.125.41.0 netmask 255.255.255.0   {
+        range 10.125.41.210 10.125.41.254;
+        option subnet-mask              255.255.255.0;
+        option routers                  10.125.41.1;
+        option domain-name              "st2.symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time 3600;
+        max-lease-time 14400;
+
+        next-server 10.125.140.25;
+        filename "/pxelinux.0";
+}
+
+
+### ST2 Office -
+Subnet 172.20.104.0 netmask 255.255.255.128   {
+        range 172.20.104.30 172.20.104.120;
+        option subnet-mask              255.255.255.128;
+        option routers                  172.20.104.1;
+        option domain-name              "symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time              7200;
+        max-lease-time                  14400;
+
+        option option-176               "L2Q=1,L2QVLAN=4001,VLANTEST=0";
+        option option-242               "L2Q=1,L2QVLAN=4001,VLANTEST=0";
+}
+
+### ST2 Office Phone -
+Subnet 10.125.5.0 netmask 255.255.255.0 {
+        range 10.125.5.20 10.125.5.220;
+        option subnet-mask              255.255.255.0;
+        option routers                  10.125.5.1;
+        option domain-name              "symnds.net";
+        option domain-name-servers      10.125.6.23, 10.117.6.23;
+        option time-offset              -18000;
+        option ntp-servers              10.125.6.23, 10.117.6.23;
+        default-lease-time 86400;
+        max-lease-time 604800;
+
+        option option-176               "MCIPADD=10.125.10.100,MCPORT=1719,TFTPSRVR=10.125.10.100,VLANTEST=0";
+        option option-242               "MCIPADD=10.125.10.100,MCPORT=1719,TFTPSRVR=10.125.10.100,VLANTEST=0";
+}
+
+
+
+
+### Include cobbler hosts
+include "/etc/dhcp/cobbler-hosts.conf";
+
+### Include static entries
+include "/etc/dhcp/statics.conf";
+
+### EOF

@@ -1,0 +1,2 @@
+default._domainkey	IN	TXT	( "v=DKIM1; k=rsa; "
+	  "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCdiEP7IjeAQkDZPzJ8ZCHZj09UjE8Fvmoprh1p7KickRn3LWQQbaODM9xUXfg06kCT/ED5H17ChSxhpJjqQDPOXTp2nSActo6SPGwMuiTov9o08ID2roDa4RNA5Pn50Gkq16yJkC65eyeljXk49wNrGcG8TWP4LSfogJ1boPhu0wIDAQAB" )  ; ----- DKIM key default for symnds.com

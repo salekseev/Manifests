@@ -1,0 +1,72 @@
+#rsyslog v3 config file
+
+#### MODULES ####
+
+$ModLoad imuxsock.so    # provides support for local system logging (e.g. via logger command)
+$ModLoad imklog.so      # provides kernel logging support (previously done by rklogd)
+$ModLoad immark.so      # provides --MARK-- message capability
+
+### Provides UDP syslog reception
+$ModLoad imudp.so
+$UDPServerRun 514
+
+#### GLOBAL DIRECTIVES ####
+
+$MaxMessageSize 32768
+
+### Use default timestamp format
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+
+#### RULES ####
+
+### Applications
+
+### Rails
+if $programname == 'rails' then							-/var/log/rails.log
+if $programname == 'rails' then 						~
+
+
+<% if @fqdn =~ /no?bu/ %>
+### NOBU Apache
+if $APP-NAME == 'nobu_web_apache' and $syslogseverity-text == 'info' then       /var/log/httpd/nobu.backup.com_access.log
+if $APP-NAME == 'nobu_web_apache' and $syslogseverity-text == 'info' then	~
+
+if $APP-NAME == 'nobu_web_apache' and $syslogseverity-text == 'err' then	/var/log/httpd/nobu.backup.com_error.log
+if $APP-NAME == 'nobu_web_apache' and $syslogseverity-text == 'err' then	~
+<% end %>
+
+### Puppet
+if $programname == 'puppet-agent' then			-/var/log/puppet.log
+if $programname == 'puppet-agent' then			~
+
+### Kernel messages
+kern.*							-/var/log/kern.log
+kern.*                                                  @<%= scope.lookupvar('rsyslog::config::syslog_forwarder') %>
+
+### Log anything (except mail) of level info or higher. Don't log private authentication messages!
+*.info;mail.none;authpriv.none;cron.none                -/var/log/messages
+
+### The authpriv file has restricted access.
+authpriv.*                                              /var/log/secure
+authpriv.*                                              @<%= scope.lookupvar('rsyslog::config::syslog_forwarder') %>
+
+### Log all the mail messages in one place.
+mail.*                                                  -/var/log/maillog
+
+### Log cron stuff
+cron.*                                                  /var/log/cron
+
+### Everybody gets emergency messages
+*.emerg                                                 *
+*.emerg                                                 @<%= scope.lookupvar('rsyslog::config::syslog_forwarder') %>
+
+### Save news errors of level crit and higher in a special file.
+uucp,news.crit                                          /var/log/spooler
+
+### Save boot messages also to boot.log
+local7.*                                                /var/log/boot.log
+local7.*                                                @<%= scope.lookupvar('rsyslog::config::syslog_forwarder') %>
+
+
+### EOF
+

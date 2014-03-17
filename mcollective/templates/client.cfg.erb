@@ -1,0 +1,32 @@
+topicprefix = /topic/
+main_collective = mcollective
+collectives = mcollective
+libdir = /usr/libexec/mcollective
+logfile = /dev/null
+loglevel = info
+
+direct_addressing = 1
+
+### Plugins
+securityprovider = psk
+plugin.psk = unset
+
+### Queue
+connector = rabbitmq
+plugin.rabbitmq.vhost = /mcollective
+plugin.rabbitmq.pool.size = 2
+plugin.rabbitmq.pool.1.host = infp-rmq-001001.st2.symnds.net
+plugin.rabbitmq.pool.1.port = 61613
+plugin.rabbitmq.pool.1.user = mcollective
+plugin.rabbitmq.pool.1.password = marionette
+
+plugin.rabbitmq.pool.2.host = infp-rmq-002001.st2.symnds.net
+plugin.rabbitmq.pool.2.port = 61613
+plugin.rabbitmq.pool.2.user = mcollective
+plugin.rabbitmq.pool.2.password = marionette
+
+# Facts
+factsource = yaml
+plugin.yaml = /etc/mcollective/facts.yaml
+
+### EOF

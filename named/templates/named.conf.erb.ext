@@ -1,0 +1,3 @@
+// Zone
+zone "home.norton.com"                  IN { type master; file "master/home.norton.com"; };
+

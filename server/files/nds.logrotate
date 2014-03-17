@@ -1,0 +1,9 @@
+/var/log/nds/*.log
+/var/log/nds/*.out
+{
+    copytruncate
+    daily
+    rotate 3
+    compress
+    missingok
+}

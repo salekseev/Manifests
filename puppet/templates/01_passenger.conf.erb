@@ -1,0 +1,11 @@
+LoadModule passenger_module modules/mod_passenger.so
+
+<IfModule mod_passenger.c>
+   PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-3.0.19
+   PassengerRuby /usr/bin/ruby
+   PassengerTempDir /var/run/passenger
+   PassengerMaxPoolSize 64
+   PassengerMinInstances 4
+   PassengerHighPerformance on
+   PassengerStatThrottleRate 60
+</IfModule>

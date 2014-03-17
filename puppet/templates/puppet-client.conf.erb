@@ -1,0 +1,11 @@
+[main]
+    logdir = /var/log/puppet
+    rundir = /var/run/puppet
+    ssldir = /var/lib/puppet/ssl
+    factpath = /var/lib/puppet/lib/facter
+    pluginsync = true
+
+[agent]
+    classfile = /var/lib/puppet/classes.txt
+    localconfig = /var/lib/puppet/localconfig
+    ca_server = puppet.mgmt.symcpe.net

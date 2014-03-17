@@ -1,0 +1,75 @@
+### NGINX Configuration
+user             nginx;
+worker_processes 2;
+
+error_log  /var/log/nginx/error.log;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include      mime.types;
+    default_type application/octet-stream;
+
+    log_format   main  '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    keepalive_timeout  65;
+
+    server {
+        listen              8081 ssl;
+        server_name         puppetdb.acc4.symnds.net;
+        ssl_certificate     /etc/nginx/ssl/certs/puppetdb.acc4.symnds.net.cert;
+        ssl_certificate_key /etc/nginx/ssl/keys/puppetdb.acc4.symnds.net.key;
+        ssl_session_cache   shared:SSL:32m;
+        ssl_session_timeout 5m;
+
+        location / {
+                       proxy_pass http://127.0.0.1:8080/;
+                       proxy_set_header Host $host;
+                       proxy_set_header X-Real-IP $remote_addr;
+                       proxy_set_header X-Forwarded-For $remote_addr;
+                       proxy_set_header X-Originating-IP $remote_addr;
+                       proxy_set_header HTTP_REMOTE_ADDR $remote_addr;
+                       proxy_set_header REMOTE_ADDR $remote_addr;
+        }
+    }
+
+    server {
+        listen              8082 ssl;
+        server_name         puppetdb.acc5.symnds.net;
+        ssl_certificate     /etc/nginx/ssl/certs/puppetdb.acc5.symnds.net.cert;
+        ssl_certificate_key /etc/nginx/ssl/keys/puppetdb.acc5.symnds.net.key;
+        ssl_session_cache   shared:SSL:32m;
+        ssl_session_timeout 5m;
+        location / {
+                       proxy_pass http://127.0.0.1:8080/;
+                       proxy_set_header Host $host;
+                       proxy_set_header X-Real-IP $remote_addr;
+                       proxy_set_header X-Forwarded-For $remote_addr;
+                       proxy_set_header X-Originating-IP $remote_addr;
+                       proxy_set_header HTTP_REMOTE_ADDR $remote_addr;
+                       proxy_set_header REMOTE_ADDR $remote_addr;
+        }
+    }
+
+    server {
+        listen              8083 ssl;
+        server_name         puppetdb.st2.symnds.net;
+        ssl_certificate     /etc/nginx/ssl/certs/puppetdb.st2.symnds.net.cert;
+        ssl_certificate_key /etc/nginx/ssl/keys/puppetdb.st2.symnds.net.key;
+        ssl_session_cache   shared:SSL:32m;
+        ssl_session_timeout 5m;
+        location / {
+                       proxy_pass http://127.0.0.1:8080/;
+                       proxy_set_header Host $host;
+                       proxy_set_header X-Real-IP $remote_addr;
+                       proxy_set_header X-Forwarded-For $remote_addr;
+                       proxy_set_header X-Originating-IP $remote_addr;
+                       proxy_set_header HTTP_REMOTE_ADDR $remote_addr;
+                       proxy_set_header REMOTE_ADDR $remote_addr;
+        }
+    }
+}

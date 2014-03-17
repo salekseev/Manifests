@@ -1,0 +1,1 @@
+OPTIONS="-Ln -p /var/run/snmpd.pid -a"

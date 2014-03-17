@@ -1,0 +1,4 @@
+<%=
+  facts = scope.to_hash.reject {|k,v| k.to_s =~ /^(uptime.*|rubysitedir|_timestamp|memoryfree|serverip|servername|path|memoryfree_mb)$/ }
+  facts.keys.sort.map {|f| {f => facts[f]}.to_yaml.to_a[1..-1].join}.join("\n")
+%>

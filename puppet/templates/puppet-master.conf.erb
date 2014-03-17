@@ -1,0 +1,63 @@
+[main]
+    external_nodes = /etc/puppet/node.rb
+    node_terminus = exec
+    vardir = /var/lib/puppet
+    logdir = /var/log/puppet
+    rundir = /var/run/puppet
+    ssldir = $vardir/ssl
+    rrddir = $vardir/rrd
+    # Added for custom facts
+    pluginsync = true
+    factpath = $vardir/lib/facter
+    listen = true
+
+
+[agent]
+    classfile = $vardir/classes.txt
+    localconfig = $vardir/localconfig
+    report = true
+    ca_server = mgt-puppet1.<%= @datacenter %>.symnds.net
+
+[master]
+    ssl_client_header = SSL_CLIENT_S_DN
+    ssl_client_verify_header = SSL_CLIENT_VERIFY
+    reports = puppetdb,foreman
+    rrdgraph = false
+    storeconfigs = true
+    storeconfigs_backend = puppetdb
+    dbadapter = mysql
+    dbname = puppet<%= @datacenter %>
+    dbuser = puppet
+    dbpassword = pupp3tp4ss
+    dbserver = inf-mysql.acc4.symnds.net
+<% if @hostname !~ /^mgt-puppet1/ -%>
+    ca = false
+<% end -%>
+
+[dev]
+    modulepath = /etc/puppet/env/dev:/etc/puppet/env/common
+    manifest = /etc/puppet/manifests/site.pp
+
+[production]
+    modulepath = /etc/puppet/env/production:/etc/puppet/env/common
+    manifest = /etc/puppet/manifests/site.pp
+
+[unassigned]
+    modulepath = /etc/puppet/env/unassigned:/etc/puppet/env/common
+    manifest = /etc/puppet/manifests/site.pp
+
+[backupify]
+    modulepath = /etc/puppet/env/backupify:/etc/puppet/env/common
+    manifest = /etc/puppet/manifests/site.pp
+
+[watchdog]
+    modulepath = /etc/puppet/env/watchdog:/etc/puppet/env/common
+    manifest = /etc/puppet/manifests/site.pp
+
+[nof]
+    modulepath = /etc/puppet/env/nof:/etc/puppet/env/common
+    manifest = /etc/puppet/manifests/site.pp
+
+[devzone]
+    modulepath = /etc/puppet/env/common:/etc/puppet/env/devzone
+    manifest = /etc/puppet/manifests/site.pp

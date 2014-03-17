@@ -1,0 +1,20 @@
+[monitor:///usr/local/apache-tomcat/logs/access.log]
+index = zone_qa
+
+[monitor:///usr/local/apache-tomcat/logs/catalina.out]
+index = zone_qa
+
+[monitor:///usr/local/tomcat/logs/access.log]
+index = zone_qa
+
+[monitor:///usr/local/tomcat/logs/catalina.out]
+index = zone_qa
+
+[monitor:///var/log/zone/*]
+index = zone_qa
+
+[monitor:///var/log/nds/*]
+index = zone_qa
+
+[monitor:///var/solr/log/*]
+index = zone_qa

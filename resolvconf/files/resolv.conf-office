@@ -1,0 +1,5 @@
+search st2.symnds.net symnds.net
+options single-request
+nameserver 10.125.6.23
+nameserver 10.117.6.23
+nameserver 10.177.6.23

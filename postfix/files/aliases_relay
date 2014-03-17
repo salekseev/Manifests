@@ -1,0 +1,10 @@
+# Basic system aliases -- these MUST be present.
+mailer-daemon:  root
+postmaster:	root, bryan_seitz@symantec.com, william_stevens@symantec.com
+mailnull:	root
+manager:	root
+abuse:		root
+webmaster:	root
+security:	root
+hostmaster:	root
+decode:		root

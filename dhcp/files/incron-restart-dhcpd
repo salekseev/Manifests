@@ -1,0 +1,37 @@
+#!/bin/bash
+# This script checks the dhcp config and restart dhcpd if the config
+# passed the checks. It'll be called by incron.
+
+PATH=/sbin:/usr/sbin:$PATH
+lockfile_age=10
+lockfile=/var/lock/subsys/restart-dhcpd
+
+# Remove the lock file if it's older than lockfile_age. A situation like this
+# normally indicates the lockfile wasn't removed properly due to unknown issues.
+if [ -f ${lockfile} ]; then
+    last_modify=$(stat -c %Z ${lockfile})
+    now=$(date '+%s')
+    delta=$((now-last_modify))
+    if [ ${delta} -gt ${lockfile_age} ]; then
+        logger -t "RESTART-DHCPD" -p "local6.info" "lockfile ${lockfile} is older than ${lockfile_age} seconds. Removing..."
+        [ -f ${lockfile} ] && rm -f ${lockfile}
+    fi
+fi
+
+# Exit if there is another instance of the script is running
+[ -f ${lockfile} ] && exit 0
+
+touch ${lockfile}
+if service dhcpd configtest 2>&1 >/dev/null; then
+    service dhcpd stop
+    logger -t "RESTART-DHCPD" -p "local6.info" "Called service dhcpd stop."
+    sleep 1
+    if pgrep -f /usr/sbin/dhcpd 2>&1 >/dev/null; then
+        pkill -f /usr/sbin/dhcpd
+        logger -t "RESTART-DHCPD" -p "local6.info" "KILLED DHCPD Forcefully!"
+    fi
+    sleep 1
+    logger -t "RESTART-DHCPD" -p "local6.info" "Called service dhcpd start."
+    service dhcpd start
+fi
+[ -f ${lockfile} ] && rm -f ${lockfile}

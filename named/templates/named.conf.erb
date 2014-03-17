@@ -1,0 +1,81 @@
+// Global
+zone "ipinfodb.com"                        { type master; file "master/ipinfodb.com"; };
+zone "symnds.net"                       IN { type forward; forwarders { 10.117.140.11; 10.125.140.11; 10.177.140.11; }; forward only; };
+zone "_msdcs.symnds.net"                IN { type forward; forwarders { 10.117.140.11; 10.125.140.11; 10.177.140.11; }; forward only; };
+
+// ACC4
+zone "acc4.symnds.net"                  IN { type forward; forwarders { 10.117.140.13; 10.117.140.14; }; forward only; };
+zone "32.10.in-addr.arpa"               IN { type forward; forwarders { 10.117.140.13; 10.117.140.14; }; forward only; };
+zone "42.10.in-addr.arpa"               IN { type forward; forwarders { 10.117.140.13; 10.117.140.14; }; forward only; };
+zone "43.10.in-addr.arpa"               IN { type forward; forwarders { 10.117.140.13; 10.117.140.14; }; forward only; };
+zone "62.10.in-addr.arpa"               IN { type forward; forwarders { 10.117.140.13; 10.117.140.14; }; forward only; };
+zone "116.10.in-addr.arpa"              IN { type forward; forwarders { 10.117.140.13; 10.117.140.14; }; forward only; };
+zone "117.10.in-addr.arpa"              IN { type forward; forwarders { 10.117.140.13; 10.117.140.14; }; forward only; };
+zone "118.10.in-addr.arpa"              IN { type forward; forwarders { 10.117.140.13; 10.117.140.14; }; forward only; };
+zone "254.168.192.in-addr.arpa"         IN { type forward; forwarders { 10.117.140.13; 10.117.140.14; }; forward only; };
+
+// ACC5
+zone "acc5.symnds.net"                  IN { type forward; forwarders { 10.177.140.13; 10.177.140.14; }; forward only; };
+zone "176.10.in-addr.arpa"              IN { type forward; forwarders { 10.177.140.13; 10.177.140.14; }; forward only; };
+zone "177.10.in-addr.arpa"              IN { type forward; forwarders { 10.177.140.13; 10.177.140.14; }; forward only; };
+zone "178.10.in-addr.arpa"              IN { type forward; forwarders { 10.177.140.13; 10.177.140.14; }; forward only; };
+
+// ST2
+
+zone "st2.symnds.net"                   IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "11.10.in-addr.arpa"               IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "30.10.in-addr.arpa"               IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "40.10.in-addr.arpa"               IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "60.10.in-addr.arpa"               IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "124.10.in-addr.arpa"              IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "125.10.in-addr.arpa"              IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "119.10.in-addr.arpa"              IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "179.10.in-addr.arpa"              IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "104.20.172.in-addr.arpa"          IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "10.168.192.in-addr.arpa"          IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "40.168.192.in-addr.arpa"          IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "41.168.192.in-addr.arpa"          IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "42.168.192.in-addr.arpa"          IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+zone "43.168.192.in-addr.arpa"          IN { type forward; forwarders { 10.125.140.13; 10.125.140.14; }; forward only; };
+
+// Corporate Zones
+zone "enterprise.veritas.com"           IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "vxindia.veritas.com"              IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "engba.symantec.com"               IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "qalabs.symantec.com"              IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "symc.symantec.com"                IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "_msdcs.symc.symantec.com"         IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "corp.symantec.com"                IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "ges.symantec.com"                 IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "gsl.symantec.com"                 IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "symad.symantec.com"               IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "eng.symantec.com"                 IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "cps.symantec.com"                 IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "cpe.symantec.com"                 IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "cloud.symantec.com"               IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "symclab.net"                      IN { type forward; forwarders { 155.64.226.72; 155.64.188.21; }; forward only; };
+zone "mgmt.symcpe.net"                  IN { type forward; forwarders { 10.119.134.2; 10.119.135.2; }; forward only; };
+zone "symcpe.net"                       IN { type forward; forwarders { 10.119.134.2; 10.119.135.2; }; forward only; };
+zone "ds1.symcpe.net"                   IN { type forward; forwarders { 10.119.134.21; 10.119.135.21; }; forward only; };
+
+
+
+// LEGACY FORWARDERS FOR OLD INFRASTRUCTURE
+zone "atbackup.local"                   IN { type forward; forwarders { 192.168.40.113; 192.168.40.114; 192.168.43.103; }; forward only; };
+zone "ds.local"                         IN { type forward; forwarders { 10.60.10.1; 10.60.10.2; 10.62.10.3; 10.62.10.4; }; forward only; };
+zone "qc.local"                         IN { type forward; forwarders { 10.30.10.1; 10.30.10.2; }; forward only; };
+zone "sd.local"                         IN { type forward; forwarders { 192.168.41.32; 192.168.41.31; }; forward only; };
+zone "swapdrive-prod.com"               IN { type forward; forwarders { 192.168.40.43; 192.168.40.44; }; forward only; };
+
+// SYM
+zone "sym.local"                        IN { type forward; forwarders { 10.40.10.1; 10.40.10.2; 10.40.10.4; 10.40.10.5; 10.42.10.8; 10.42.10.11; }; forward only; };
+zone "_msdcs.sym.local"                 IN { type forward; forwarders { 10.40.10.1; 10.40.10.2; 10.40.10.4; 10.40.10.5; 10.42.10.8; 10.42.10.11; }; forward only; };
+zone "_tcp.sym.local"                   IN { type forward; forwarders { 10.40.10.1; 10.40.10.2; 10.40.10.4; 10.40.10.5; 10.42.10.8; 10.42.10.11; }; forward only; };
+zone "_udp.sym.local"                   IN { type forward; forwarders { 10.40.10.1; 10.40.10.2; 10.40.10.4; 10.40.10.5; 10.42.10.8; 10.42.10.11; }; forward only; };
+zone "_sites.sym.local"                 IN { type forward; forwarders { 10.40.10.1; 10.40.10.2; 10.40.10.4; 10.40.10.5; 10.42.10.8; 10.42.10.11; }; forward only; };
+zone "DomainDnsZones.sym.local"         IN { type forward; forwarders { 10.40.10.1; 10.40.10.2; 10.40.10.4; 10.40.10.5; 10.42.10.8; 10.42.10.11; }; forward only; };
+zone "ForestDnsZones.sym.local"         IN { type forward; forwarders { 10.40.10.1; 10.40.10.2; 10.40.10.4; 10.40.10.5; 10.42.10.8; 10.42.10.11; }; forward only; };
+
+// Zone
+//zone "home.norton.com"                  IN { type master; file "master/home.norton.com"; };
+

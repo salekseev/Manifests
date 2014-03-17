@@ -1,0 +1,8 @@
+/var/log/puppet.log
+{
+    copytruncate
+    daily
+    rotate 3
+    compress
+    missingok
+}

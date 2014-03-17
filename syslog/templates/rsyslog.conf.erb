@@ -1,0 +1,82 @@
+#rsyslog v3 config file
+$PreserveFQDN on
+
+#### MODULES ####
+$ModLoad imuxsock.so
+$ModLoad imklog.so
+$ModLoad immark.so
+
+### Provides UDP syslog reception
+$ModLoad imudp.so
+$UDPServerRun 514
+
+#### GLOBAL DIRECTIVES ####
+$MaxMessageSize 32768
+
+### Use default timestamp format
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+
+### File output settings
+$OMFileAsyncWriting on
+$OMFileIOBufferSize 4K
+$OMFileFlushOnTXEnd on
+
+### Include the rsyslog.d directory
+$IncludeConfig /etc/rsyslog.d/*.conf
+
+#### RULES ####
+
+### Applications
+<% if hostname =~ /nobu-admin1/ %>
+if $programname == 'rails' and $syslogseverity <= 4                                    then    /var/log/nds/nobu_errors.log
+if $programname == 'rails' then                                                     ~
+<% end -%>
+<% if hostname =~ /^nobu-web/ or hostname =~ /^nbup-www/ or hostname =~ /^nbuu/ or hostname =~ /^nbub/ %>
+### Rails
+if $programname == 'rails' and $msg contains 'Mysql::Error'                            then    /var/log/rails.log
+if $programname == 'rails' and $msg contains 'Backup scheduler started at UTC time:'   then    /var/log/rails.log
+if $programname == 'rails' and $msg contains 'Internal Server Error'                   then    /var/log/rails.log
+if $programname == 'rails' and $msg contains 'Exception'                               then    /var/log/rails.log
+if $programname == 'rails' and $msg contains 'No route matches'                        then    /var/log/rails.log
+if $programname == 'rails' and $msg contains 'Error: enableOlbu failed'                then    /var/log/rails.log
+if $programname == 'rails' and $msg contains 'Check for service errors'                then    /var/log/rails.log
+if $programname == 'rails' and $msg contains 'Unexpected validation error'             then    /var/log/rails.log
+if $programname == 'rails' and $msg contains 'Session has timed out'                   then    /var/log/rails.log
+if $programname == 'rails' and $syslogseverity <= 4                                    then    /var/log/nds/nobu_errors.log
+if $programname == 'rails'                                                             then    ~
+
+### NOBU Apache
+if $APP-NAME == 'nobu_web_apache' and $syslogseverity-text == 'info'        then    /var/log/httpd/nobu.backup.com_access.log
+if $APP-NAME == 'nobu_web_apache' and $syslogseverity-text == 'err'         then    /var/log/httpd/nobu.backup.com_error.log
+if $APP-NAME == 'nobu_web_apache'                                           then    @<%= scope.lookupvar('rsyslog::config::syslog_forwarder') %>
+if $APP-NAME == 'nobu_web_apache'                                           then    ~
+<% end -%>
+### SPOC
+<% if hostname =~ /^nzop-spc/ %>
+if $programname == 'spoc' then                                                          ~
+<% end -%>
+<% if hostname =~ /^nbup-ple/ or hostname =~ /^nobu-pele/ %>
+### NOBU Pele
+if $programname == 'peled'                                                  then    /var/nds/pele.log
+if $programname == 'peled'                                                  then    @<%= scope.lookupvar('rsyslog::config::syslog_forwarder') %>
+if $programname == 'peled'                                                  then    ~
+<% end -%>
+### Puppet
+if $programname == 'puppet-agent'                                           then    /var/log/puppet.log
+if $programname == 'puppet-agent'                                           then    ~
+
+### Standard syslog definitions
+kern.*                                                                      /var/log/kern.log
+*.info;mail.none;authpriv.none;cron.none                                    /var/log/messages
+authpriv.*                                                                  /var/log/secure
+mail.*                                                                      /var/log/maillog
+cron.*                                                                      /var/log/cron
+*.emerg                                                                     *
+uucp,news.crit                                                              /var/log/spooler
+local7.*                                                                    /var/log/boot.log
+local6.*                                                                    /var/log/dhcpd.log
+
+### Send everything that reaches this point to the syslog aggregators
+*.*                         @<%= scope.lookupvar('rsyslog::config::syslog_forwarder') %>
+
+### EOF

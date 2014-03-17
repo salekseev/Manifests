@@ -1,0 +1,22 @@
+#
+# /etc/postfix/bypass_recipient.regexp
+#
+# ******************************************************************
+# THIS FILE IS MANAGED BY PUPPET, ANY CHANGES MADE HERE WILL BE LOST
+# SEE DCOPS BEFORE MAKING ANY CHANGES. ALL ROLLBACKS COST $10.
+# ******************************************************************
+#
+
+### Blacklist
+/noreply@nortonzone.com$/ DISCARD
+/onlinefamily@norton.com$/ DISCARD
+/family@norton.com$/ DISCARD
+
+### Whitelist
+/@symnds.net$/	OK
+/@symnds.com$/	OK
+/@nortonzone.com$/	OK
+/^abuse@/ OK
+/^hostmaster@/ OK
+/^postmaster@/ OK
+/^security@/ OK

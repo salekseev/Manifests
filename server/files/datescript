@@ -1,0 +1,3 @@
+#!/bin/bash
+/bin/date -s "`date -u`"
+/bin/touch /tmp/leapsecond_2012_06_30

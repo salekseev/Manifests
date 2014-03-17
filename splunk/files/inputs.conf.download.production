@@ -1,0 +1,9 @@
+[monitor:///var/log/nginx/access.log]
+index = origin
+
+[monitor:///var/log/nginx/error.log]
+index = origin
+
+### Catch all
+[monitor:///var/log/nds/*]
+index=the_lost
