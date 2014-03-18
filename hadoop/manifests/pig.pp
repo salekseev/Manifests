@@ -8,13 +8,23 @@ class hadoop::pig (
         require => Yumrepo[ "HDP-1.2.0-1-1.x" , "HDP-UTILS-1.1.0.15" ,  "Updates-HDP-1.2.0-1-1.2.1" , "ambari-1.x" , "HDP-UTILS-1.1.0.16" , "Updates-ambari-1.x" ],
    }
 
-    service { 'secondarynamenode':
-        ensure => running,
-        enable => true,
-        path => '/usr/lib/hadoop/bin/',
-        provider => 'base',
-        require => Package['hadoop'],
-        #subscribe => File['/etc/hadoop/conf/hdfs-format.sh'],
-        start => "runuser -l hdfs -c '/usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start secondarynamenode'"
+    file { '/etc/pig/conf/pig.properties':
+	ensure => file,
+	mode => '755',
+	content => template('hadoop/pig.properties.erb'),
     }
+
+    file { '/etc/pig/conf/log4j.properties':
+        ensure => file,
+        mode => '755',
+        content => template('hadoop/log4j.properties.erb'),
+    }
+
+    file { "/etc/pig":
+                ensure => "directory",
+                owner  => "hdfs",
+                group  => "hadoop",
+                mode   => 755,
+    }
+ }
 }
