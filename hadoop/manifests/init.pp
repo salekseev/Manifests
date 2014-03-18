@@ -5,7 +5,7 @@ class hadoop (
     $SECONDARYNAMENODE_HOSTNAME = 'npbddnash10001',
     $DFS_DATA_DIR = '/hdfs/dn/',
     $DFS_NAME_DIR = '/hdfs/nn/',
-    $JTNODE_HOSTNAME = 'http://pbdnnash10001:8080',
+    $JTNODE_HOSTNAME = 'pbdnnash10001',
     $MAPRED_LOCAL_DIR = '/hdfs/mapred/',
     $MASTERS_LIST = 'pbdnnash10001
 pbddnash10001',
@@ -108,37 +108,42 @@ pbddnash10003',
 
 #Install Oricle Java
     exec {"jdk_install": 
-        cwd     =>  "/root", 
-        command =>  "/root/jdk-6u31-linux-x64.bin", 
+        cwd     =>  "/home/hdfs", 
+	path => "/home/hdfs",
+        command =>  "/bin/su hdfs -c '/home/hdfs/jdk-6u31-linux-x64.bin'", 
         creates =>  "/usr/java/jdk1.6.0_31/bin/javac", 
-        require =>  file["/root/jdk-6u31-linux-x64.bin"], 
+        require =>  file["/home/hdfs/jdk-6u31-linux-x64.bin"], 
     } 
 
-    file {"/root/jdk-6u31-linux-x64.bin": 
+    file { "/home/hdfs":
+                ensure => "directory",
+                owner  => "hdfs",
+                group  => "hadoop",
+                mode   => 755,
+    }
+
+    file {"/home/hdfs/jdk-6u31-linux-x64.bin": 
         ensure => present, 
-        mode   => 750,
+        owner => 'hdfs',
+	mode   => 750,
         source => "puppet:///modules/hadoop/jdk-6u31-linux-x64.bin"; 
     } 
 
    file { "/usr/java":
                 ensure => "directory",
-                owner  => "root",
+                owner  => "hdfs",
                 group  => "hadoop",
                 mode   => 775,
     }
 
     file { '/usr/java/default':
                 ensure => 'link',
-		owner  => "hdfs",
-                group  => "hadoop",
-                target => '/root/jdk1.6.0_31/',
+                target => '/home/hdfs/jdk1.6.0_31/',
     }
 
     file { '/usr/bin/java':
                 ensure => 'link',
-		owner  => "hdfs",
-                group  => "hadoop",
-                target => '/root/jdk1.6.0_31/bin/java',
+                target => '/home/hdfs/jdk1.6.0_31/bin/java',
     }
 
 
@@ -369,6 +374,14 @@ pbddnash10003',
     ssh_authorized_key { "root@$NAMENODE_HOSTNAME":
         name   => "root@$NAMENODE_HOSTNAME",
         user   => root,
+        ensure => "present",
+        type   => "ssh-rsa",
+        key    => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAyYXisBsbjPCAwPmzau18iGCU6e/d3OhNwQ+HowXB0BcSRE6yGf/vE6+i9WD5Hm9XNahwTpOgTku9PPGVtaYrDU++Iy0w29V7LnF4ffP62uVxcq+G+vxsAi1SyGBgXIH7oJulHys3aKr+uQxyLsan2K2+u17h58gYttF+G7BgmAd7eecteBOvvRMCxs9ImFF8Fkaqk8+TV+StKHjM8Ssp1R8j0HJJ4lMjvtCsQRIkd7fgzaCbGahUJ6DN2/tm2hPuUZ7Zv1xme3UG162//gRGjhuH+Qvxc5V9QFPZAcsdXMYHTkQu0oXYDpI2fVq4gxuswJxKR81/MLcRjMlcMoi9+w==',
+    }
+
+    ssh_authorized_key { "hdfs@$NAMENODE_HOSTNAME":
+        name   => "hdfs@$NAMENODE_HOSTNAME",
+        user   => hdfs,
         ensure => "present",
         type   => "ssh-rsa",
         key    => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAyYXisBsbjPCAwPmzau18iGCU6e/d3OhNwQ+HowXB0BcSRE6yGf/vE6+i9WD5Hm9XNahwTpOgTku9PPGVtaYrDU++Iy0w29V7LnF4ffP62uVxcq+G+vxsAi1SyGBgXIH7oJulHys3aKr+uQxyLsan2K2+u17h58gYttF+G7BgmAd7eecteBOvvRMCxs9ImFF8Fkaqk8+TV+StKHjM8Ssp1R8j0HJJ4lMjvtCsQRIkd7fgzaCbGahUJ6DN2/tm2hPuUZ7Zv1xme3UG162//gRGjhuH+Qvxc5V9QFPZAcsdXMYHTkQu0oXYDpI2fVq4gxuswJxKR81/MLcRjMlcMoi9+w==',

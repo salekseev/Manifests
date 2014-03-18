@@ -1,13 +1,6 @@
 class hadoop::namenode (
 ){
 
-    file { "/home/hdfs/":
-                ensure => "directory",
-                owner  => "hdfs",
-                group  => "hadoop",
-                mode   => 750,
-    }
-
     file { "/home/mapred/":
                 ensure => "directory",
                 owner  => "mapred",
@@ -77,14 +70,6 @@ class hadoop::namenode (
         source => 'puppet:///modules/hadoop/id_rsa.pub',
     }
 
-    ssh_authorized_key { "hdfs@$hadoop::NAMENODE_HOSTNAME":
-        name   => "hdfs@$hadoop::NAMENODE_HOSTNAME",
-        user   => root,
-        ensure => "present",
-        type   => "ssh-rsa",
-        key    => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAyYXisBsbjPCAwPmzau18iGCU6e/d3OhNwQ+HowXB0BcSRE6yGf/vE6+i9WD5Hm9XNahwTpOgTku9PPGVtaYrDU++Iy0w29V7LnF4ffP62uVxcq+G+vxsAi1SyGBgXIH7oJulHys3aKr+uQxyLsan2K2+u17h58gYttF+G7BgmAd7eecteBOvvRMCxs9ImFF8Fkaqk8+TV+StKHjM8Ssp1R8j0HJJ4lMjvtCsQRIkd7fgzaCbGahUJ6DN2/tm2hPuUZ7Zv1xme3UG162//gRGjhuH+Qvxc5V9QFPZAcsdXMYHTkQu0oXYDpI2fVq4gxuswJxKR81/MLcRjMlcMoi9+w==',
-    }
-
     ssh_authorized_key { "mapred@$hadoop::NAMENODE_HOSTNAME":
         name   => "mapred@$hadoop::NAMENODE_HOSTNAME",
         user   => root,
@@ -110,6 +95,19 @@ class hadoop::namenode (
 	# path    => [ "/usr/local/bin/", "/bin/" ],  # alternative syntax
     }
 
+    exec { "mapred-mkdir":
+        command => '/usr/bin/hadoop fs -mkdir /mapred',
+        #require => File['/var/run/hadoop/hdfs/hdfs-format.pid'],
+        path    => "/usr/bin/:/bin/",  # alternative syntax
+    }
+
+    exec { "mapred-chown":
+        command => '/usr/bin/hadoop fs -chown -R mapred /mapred',
+        require => Exec['mapred-mkdir'],
+        path    => "/usr/bin/:/bin/",  # alternative syntax
+    }
+
+
     service { 'namenode':
 	ensure => running,
 	enable => true,
@@ -119,6 +117,27 @@ class hadoop::namenode (
 	subscribe => File['/etc/hadoop/conf/hdfs-format.sh'],
 	start => "runuser -l hdfs -c '/usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start namenode'"
     }
+
+    service { 'jobtracker':
+        ensure => running,
+        enable => true,
+        path => '/usr/lib/hadoop/bin/',
+        provider => 'base',
+        require => Package['hadoop'],
+        subscribe => File['/etc/hadoop/conf/hdfs-format.sh'],
+        start => "runuser -l mapred -c '/usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start jobtracker'"
+    }
+
+    service { 'historyserver':
+        ensure => running,
+        enable => true,
+        path => '/usr/lib/hadoop/bin/',
+        provider => 'base',
+        require => Package['hadoop'],
+        subscribe => File['/etc/hadoop/conf/hdfs-format.sh'],
+        start => "runuser -l mapred -c '/usr/lib/hadoop/bin/hadoop-daemon.sh --config /etc/hadoop/conf start historyserver'"
+    }
+
 
 
 }
