@@ -71,25 +71,86 @@ end
 ################################################################################
 ################################################################################
 module Facter::Util::ITOP_Facts
+    @cache_location='/var/lib/puppet/.itop_facts_cache'
+    username='readonlyuser'
+    password='readonlypasswd'
+    
+    ############################################################################
+    ############################################################################
     def self.get_fqdn                                                           # cannot use other facts from within a fact, because they may not have been populated yet
         return `/bin/hostname -f`.chomp
     end
 
-    username='readonlyuser'
-    password='readonlypasswd'
+    ############################################################################
+    ############################################################################
+    def self.read_cache
+        data_string = nil
+        begin
+            open(@cache_location, 'r') do |fd|
+                data_string = fd.read()
+            end
+        rescue Errno::ENOENT
+        end
+        return data_string
+    end
 
+    ############################################################################
+    ############################################################################
+    def self.write_cache(str)
+        begin
+            open(@cache_location,'w') do |fd|
+                fd.write(str)
+            end
+        rescue
+            raise
+        end
+        return
+    end
+
+
+    ############################################################################
+    ############################################################################
     itop = ITOP_Facts::ItopClient.new('itop.symcpe.net', username, password)
-    data_string = itop.request(JSON.dump({'operation'=> 'core/get', 'class' => 'Server','key' => "SELECT Server WHERE FQDN = '#{self.get_fqdn}'"}))
-    data = JSON.load(data_string)
+    data_string = nil
+    cached = false
 
-    objects = data['objects']
-    first=objects.keys[0]
+    begin
+        data_string = itop.request(JSON.dump({'operation'=> 'core/get', 'class' => 'Server','key' => "SELECT Server WHERE FQDN = '#{self.get_fqdn}'"}))
+    rescue
+    end
 
-    objects[first]['fields'].each do |k, v|
-        if v.class == Hash or v.class == Array
-            Facter.add("itop_#{k}") { setcode { JSON.dump(v) } }
-        else
-            Facter.add("itop_#{k}") { setcode { String(v) } }
+    if data_string == nil
+        data_string = read_cache
+        cached = true
+    end
+
+    if data_string != nil
+        begin
+            data = JSON.load(data_string)
+        rescue
+        end
+    end
+
+    unless data and data['objects'] and data['objects'].keys().size > 0
+        data_string = read_cache
+        data = JSON.load(data_string)
+        cached = true
+    end
+
+    if data
+        if !cached 
+            write_cache(data_string)
+        end
+        
+        objects = data['objects']
+        first=objects.keys[0]
+
+        objects[first]['fields'].each do |k, v|
+            if v.class == Hash or v.class == Array
+                Facter.add("itop_#{k}") { setcode { JSON.dump(v) } }
+            else
+                Facter.add("itop_#{k}") { setcode { String(v) } }
+            end
         end
     end
 end
