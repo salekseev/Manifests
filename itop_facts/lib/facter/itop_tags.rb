@@ -146,6 +146,7 @@ module Facter::Util::ITOP_Facts
         first=objects.keys[0]
 
         objects[first]['fields'].each do |k, v|
+            next if k.start_with?('itop_')
             if v.class == Hash or v.class == Array
                 Facter.add("itop_#{k}") { setcode { JSON.dump(v) } }
             else
