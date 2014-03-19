@@ -108,21 +108,21 @@ pbddnash10003',
 
 #Install Oricle Java
     exec {"jdk_install": 
-        cwd     =>  "/home/hdfs", 
-	path => "/home/hdfs",
-        command =>  "/bin/su hdfs -c '/home/hdfs/jdk-6u31-linux-x64.bin'", 
+        cwd     =>  "/opt/jdk", 
+	path => "/opt/jdk",
+        command =>  "/bin/su hdfs -c '/opt/jdk/jdk-6u31-linux-x64.bin'", 
         creates =>  "/usr/java/jdk1.6.0_31/bin/javac", 
-        require =>  file["/home/hdfs/jdk-6u31-linux-x64.bin"], 
+        require =>  file["/opt/jdk/jdk-6u31-linux-x64.bin"], 
     } 
 
-    file { "/home/hdfs":
+    file { "/opt/jdk/":
                 ensure => "directory",
                 owner  => "hdfs",
                 group  => "hadoop",
                 mode   => 755,
     }
 
-    file {"/home/hdfs/jdk-6u31-linux-x64.bin": 
+    file {"/opt/jdk/jdk-6u31-linux-x64.bin": 
         ensure => present, 
         owner => 'hdfs',
 	mode   => 750,
@@ -138,12 +138,12 @@ pbddnash10003',
 
     file { '/usr/java/default':
                 ensure => 'link',
-                target => '/home/hdfs/jdk1.6.0_31/',
+                target => '/opt/jdk/jdk1.6.0_31/',
     }
 
     file { '/usr/bin/java':
                 ensure => 'link',
-                target => '/home/hdfs/jdk1.6.0_31/bin/java',
+                target => '/opt/jdk/jdk1.6.0_31/bin/java',
     }
 
 
@@ -164,6 +164,7 @@ pbddnash10003',
 
    file { "/hdfs":
         	ensure => "directory",
+                recurse => true,
     		owner  => "hdfs",
     		group  => "hadoop",
     		mode   => 750,
@@ -171,13 +172,15 @@ pbddnash10003',
 
     file { "/hdfs/nn":
                 ensure => "directory",
-                owner  => "hdfs",
+                recurse => true,
+		owner  => "hdfs",
                 group  => "hadoop",
                 mode   => 755,
     }
 
     file { "/hdfs/dn":
                 ensure => "directory",
+                recurse => true,
                 owner  => "hdfs",
                 group  => "hadoop",
                 mode   => 750,
@@ -185,6 +188,7 @@ pbddnash10003',
 
     file { "/hdfs/snn":
                 ensure => "directory",
+                recurse => true,
                 owner  => "hdfs",
                 group  => "hadoop",
                 mode   => 755,
@@ -192,6 +196,7 @@ pbddnash10003',
 
     file { "/hdfs/mapred":
                 ensure => "directory",
+                recurse => true,
                 owner  => "mapred",
                 group  => "hadoop",
                 mode   => 755,

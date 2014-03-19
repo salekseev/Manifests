@@ -1,18 +1,5 @@
 #!/bin/sh
 
-#
-# Directories Script
-#
-# 1. To use this script, you must edit the TODO variables below for your environment.
-#
-# 2. Warning: Leave the other parameters as the default values. Changing these default values will require you to
-#    change values in other configuration files.
-#
-
-#
-# Hadoop Service - HDFS
-#
-
 # Space separated list of directories where NameNode will store file system image.
 DFS_NAME_DIR="/hdfs/nn"
 
@@ -105,6 +92,7 @@ ZOOKEEPER_PID_DIR="/var/run/zookeeper"
 
 # Directory to store the Pig configuration files.
 PIG_CONF_DIR="/etc/pig/conf"
+
 
 #
 # Hadoop Service - Oozie

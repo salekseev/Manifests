@@ -1,7 +1,6 @@
-class hadoop::pig (
-){
-
-    package { pig:
+class hadoop::pig()
+{
+    package { 'pig':
         ensure => latest,
         provider => 'yum',
         name    =>  'pig',
@@ -12,12 +11,14 @@ class hadoop::pig (
 	ensure => file,
 	mode => '755',
 	content => template('hadoop/pig.properties.erb'),
+	require => Package['pig'],
     }
 
     file { '/etc/pig/conf/log4j.properties':
         ensure => file,
         mode => '755',
         content => template('hadoop/log4j.properties.erb'),
+	require => Package['pig'],
     }
 
     file { "/etc/pig":
@@ -25,6 +26,6 @@ class hadoop::pig (
                 owner  => "hdfs",
                 group  => "hadoop",
                 mode   => 755,
+	require => Package['pig'],
     }
- }
 }

@@ -31,7 +31,7 @@ class hadoop::users {
 
     user { 'hive':
                 ensure          => present,
-                home            => '/home/',
+                home            => '/home/hive/',
                 shell           => '/bin/bash',
                 comment         => 'hive service',
                 managehome      => true,
