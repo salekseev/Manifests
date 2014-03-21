@@ -4,6 +4,7 @@ require 'json'
 require 'open-uri'
 require 'erb'
 require 'facter'
+require 'socket'
 
 ################################################################################
 ################################################################################
@@ -62,8 +63,11 @@ module ITOP_Facts
             @request['json_data'] = json_data
             @url.query = self.request_string
             @url.open do |req|
-                return req.read()
+                if req
+                    return req.read()
+                end
             end
+            return nil
         end
     end
 end
@@ -74,11 +78,21 @@ module Facter::Util::ITOP_Facts
     @cache_location='/var/lib/puppet/.itop_facts_cache'
     username='readonlyuser'
     password='readonlypasswd'
+    hostname = 'itop.symcpe.net'
     
     ############################################################################
     ############################################################################
     def self.get_fqdn                                                           # cannot use other facts from within a fact, because they may not have been populated yet
-        return `/bin/hostname -f`.chomp
+        possible_fqdn = []
+        possible_fqdn << `/bin/hostname -f`.chomp
+        possible_fqdn << `/bin/hostname`.chomp
+
+        begin
+            possible_fqdn << Socket.getaddrinfo(Socket.gethostbyname(Socket.gethostname).first, 'http').sort { |l, r| r[2].size <=> l[2].size }[0][2]
+        rescue
+        end
+
+        return possible_fqdn.sort { |l, r| r.size <=> l.size }[0]
     end
 
     ############################################################################
@@ -87,9 +101,11 @@ module Facter::Util::ITOP_Facts
         data_string = nil
         begin
             open(@cache_location, 'r') do |fd|
-                data_string = fd.read()
+                if fd
+                    data_string = fd.read()
+                end
             end
-        rescue Errno::ENOENT
+        rescue
         end
         return data_string
     end
@@ -107,10 +123,9 @@ module Facter::Util::ITOP_Facts
         return
     end
 
-
     ############################################################################
     ############################################################################
-    itop = ITOP_Facts::ItopClient.new('itop.symcpe.net', username, password)
+    itop = ITOP_Facts::ItopClient.new(hostname, username, password)
     data_string = nil
     cached = false
 
