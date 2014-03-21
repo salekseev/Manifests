@@ -84,8 +84,8 @@ module Facter::Util::ITOP_Facts
     ############################################################################
     def self.get_fqdn                                                           # cannot use other facts from within a fact, because they may not have been populated yet
         possible_fqdn = []
-        possible_fqdn << `/bin/hostname -f`.chomp
-        possible_fqdn << `/bin/hostname`.chomp
+        possible_fqdn << `/bin/hostname -f 2>/dev/null`.chomp
+        possible_fqdn << `/bin/hostname 2>/dev/null`.chomp
 
         begin
             possible_fqdn << Socket.getaddrinfo(Socket.gethostbyname(Socket.gethostname).first, 'http').sort { |l, r| r[2].size <=> l[2].size }[0][2]
