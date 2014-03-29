@@ -76,8 +76,8 @@ end
 ################################################################################
 module Facter::Util::ITOP_Facts
     @cache_location='/var/lib/puppet/.itop_facts_cache'
-    username='readonlyuser'
-    password='readonlypasswd'
+    username='bryan_seitz'
+    password='YbHo3v'
     hostname = 'itop.symcpe.net'
     
     ############################################################################
