@@ -76,8 +76,8 @@ end
 ################################################################################
 module Facter::Util::ITOP_Facts
     @cache_location='/var/lib/puppet/.itop_facts_cache'
-    username='bryan_seitz'
-    password='YbHo3v'
+    username='readonlyuser'
+    password='readonlypasswd'
     hostname = 'itop.symcpe.net'
     
     ############################################################################
@@ -148,11 +148,14 @@ module Facter::Util::ITOP_Facts
 
     unless data and data['objects'] and data['objects'].keys().size > 0
         data_string = read_cache
-        data = JSON.load(data_string)
-        cached = true
+        begin
+            data = JSON.load(data_string)
+            cached = true
+        rescue
+        end
     end
 
-    if data
+    if data and data['objects'] and data['objects'].keys().size > 0
         if !cached 
             write_cache(data_string)
         end
