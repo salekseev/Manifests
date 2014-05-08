@@ -1,0 +1,24 @@
+{
+    "blueprint": "cpehadoop",
+    "host-groups": [
+        {
+            "name": "masterNameNode",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::NAMENODE_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "slaves",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES1_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES2_HOSTNAME') %>"
+                }
+            ]
+        }
+    ]
+}

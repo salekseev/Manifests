@@ -1,0 +1,11 @@
+#!/bin/bash
+file="/tmp/ambari-install-cluster.pid"
+if [ -f $file ]; then
+        echo "cluster is already installed and started"
+else
+ 
+/tmp/cluster_blueprint.py -v -a import -f <%= scope.lookupvar('hdp::params::BLUEPRINT_PATH') %> -o <%= scope.lookupvar('hdp::params::CLUSTER_CONF_PATH') %> -c <%= scope.lookupvar('hdp::params::CLUSTER_NAME') %> -s
+
+/bin/touch /tmp/ambari-install-cluster.pid
+
+fi

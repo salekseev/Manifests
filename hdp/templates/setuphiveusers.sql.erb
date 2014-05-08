@@ -1,0 +1,5 @@
+create database hive;
+CREATE USER 'hive'@'%' IDENTIFIED BY '<%= scope.lookupvar('hdp::params::PASSWORD') %>';
+GRANT ALL PRIVILEGES ON *.* TO 'hive'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'hive'@'<%= scope.lookupvar('hdp::params::MYSQLSERVER_HOSTNAME') %>' identified by '<%= scope.lookupvar('hdp::params::PASSWORD') %>';
+flush privileges;

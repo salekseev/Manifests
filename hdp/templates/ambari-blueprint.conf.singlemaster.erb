@@ -1,0 +1,141 @@
+{
+    "configurations": [
+        {
+            "hdfs-site": {
+                "dfs.namenode.name.dir": "/hadoop/nn",
+                "dfs.datanode.data.dir": "/hadoop/dn"
+            }
+        },
+        {
+            "yarn-site": {
+                "yarn.nodemanager.local-dirs" : "/hadoop/yarn/local",
+                "yarn.nodemanager.log-dirs" : "/hadoop/yarn/log"
+            }
+        },
+        {
+            "global": {
+                "namenode_heapsize" : "1024m",
+                "resourcemanager_heapsize" : "1024",
+                "hive_database": "Existing MySQL Database",
+                "hive_database_type": "mysql",
+                "hive_existing_mysql_database": "MySQL",
+                "hive_hostname": "<%= scope.lookupvar('hdp::params::MYSQLSERVER_HOSTNAME') %>"
+            }
+        },
+        {
+            "hive-site": {
+                "ambari.hive.db.schema.name": "hive",
+                "javax.jdo.option.ConnectionPassword": "<%= scope.lookupvar('hdp::params::PASSWORD') %>",
+                "javax.jdo.option.ConnectionURL": "jdbc:mysql://<%= scope.lookupvar('hdp::params::MYSQLSERVER_HOSTNAME') %>/hive?createDatabaseIfNotExist=true",
+                "javax.jdo.option.ConnectionUserName": "hive",
+                "hive.metastore.uris": "thrift://<%= scope.lookupvar('hdp::params::MYSQLSERVER_HOSTNAME') %>:9083"
+            }
+        },
+        {
+            "oozie-site": {
+                "oozie.db.schema.name": "oozie",
+                "oozie.service.JPAService.jdbc.password": "<%= scope.lookupvar('hdp::params::PASSWORD') %>",
+                "oozie.service.JPAService.jdbc.url": "jdbc:mysql://<%= scope.lookupvar('hdp::params::MYSQLSERVER_HOSTNAME') %>/oozie",
+                "oozie.service.JPAService.jdbc.username": "oozie",
+                "oozie.service.JPAService.jdbc.driver": "com.mysql.jdbc.Driver"
+            }
+        }
+    ],
+    "host_groups": [
+        {
+            "name": "masterNameNode",
+            "components": [
+                {
+                    "name": "NAMENODE"
+                },
+                {
+                    "name": "HDFS_CLIENT"
+                },
+                {
+                    "name": "YARN_CLIENT"
+                },
+                {
+                    "name": "MAPREDUCE2_CLIENT"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                },
+                {
+                    "name": "SECONDARY_NAMENODE"
+                },
+                {
+                    "name": "RESOURCEMANAGER"
+                },
+                {
+                    "name": "HISTORYSERVER"
+                },
+                {
+                    "name": "NAGIOS_SERVER"
+                },
+                {
+                    "name": "GANGLIA_SERVER"
+                },
+                {
+                    "name": "ZOOKEEPER_SERVER"
+                },
+                {
+                    "name": "HIVE_METASTORE"
+                },
+                {
+                    "name": "HIVE_SERVER"
+                },
+                {
+                    "name": "HCAT"
+     		},
+                {
+                    "name": "OOZIE_SERVER"
+                },
+                {
+                    "name": "MYSQL_SERVER"
+                }
+            ],
+            "cardinality": "1"
+        },
+        {
+            "name": "slaves",
+            "components": [
+                {
+                    "name": "DATANODE"
+                },
+                {
+                    "name": "HDFS_CLIENT"
+                },
+                {
+                    "name": "NODEMANAGER"
+                },
+                {
+                    "name": "YARN_CLIENT"
+                },
+                {
+                    "name": "MAPREDUCE2_CLIENT"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                },
+                {
+                    "name": "ZOOKEEPER_CLIENT"
+                },
+		{
+                    "name": "SQOOP"
+                },
+                {
+                    "name": "PIG"
+                },
+                {
+                    "name": "OOZIE_CLIENT"
+                }
+            ],
+            "cardinality": "2"
+        }
+    ],
+    "Blueprints": {
+        "blueprint_name": "cpehadoop",
+        "stack_name": "HDP",
+        "stack_version": "2.1"
+    }
+}

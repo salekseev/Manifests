@@ -1,0 +1,5 @@
+CREATE USER 'oozie'@'%' IDENTIFIED BY '<%= scope.lookupvar('hdp::params::PASSWORD') %>';
+create database oozie;
+GRANT ALL PRIVILEGES ON *.* TO 'oozie'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'oozie'@'<%= scope.lookupvar('hdp::params::MYSQLSERVER_HOSTNAME') %>' identified by '<%= scope.lookupvar('hdp::params::PASSWORD') %>';
+flush privileges;
