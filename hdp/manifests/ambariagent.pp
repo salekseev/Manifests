@@ -34,7 +34,6 @@ class hdp::ambariagent()
         name    =>  'openssl-devel',
    }
  
-  
    file { '/etc/ambari-agent/conf/ambari-agent.ini':
         ensure => file,
         mode => '755',
@@ -42,14 +41,6 @@ class hdp::ambariagent()
 	require => Package['ambari-agent'],
     } 
     
-#    file { '/tmp/ambari-agentstart.sh':
- #               ensure => present,
-  #              source => "puppet:///modules/hdp/ambari-agentstart.sh",
-   #             owner => "root",
-    #            group => "root",
-     #           mode => 774,
-      #          require => Package['ambari-agent'],
-    #}
     service { 'ambari-agent':
       ensure     => running,
       enable     => true,
@@ -57,10 +48,5 @@ class hdp::ambariagent()
       hasstatus  => true,
       require    => File['/etc/ambari-agent/conf/ambari-agent.ini'],
     }
-#     exec { "ambariagent-setup":
- #       command => "/tmp/ambari-agentstart.sh",
-  #      require => File['/etc/ambari-agent/conf/ambari-agent.ini'],
-#	logoutput => true,
- #   }
 
 }

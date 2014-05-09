@@ -19,13 +19,18 @@ service { 'ip6tables':
     }
 
 
-    file { "/var/lib/jenkins/cluster-info.py":
-                ensure => present,
-                source => "puppet:///modules/hdp/cluster-info.py",
-                owner => "jenkins",
-                group => "jenkins",
-                mode => 774,
-    }
+file { "/var/lib/jenkins":
+	ensure => directory,
+	recurse => true
+}
+file { "/var/lib/jenkins/cluster-info.py":
+	ensure => present,
+	source => "puppet:///modules/hdp/cluster-info.py",
+	owner => "jenkins",
+	#group => "jenkins",
+	mode => 774,
+	require => File['/var/lib/jenkins']
+}
 
 
 Exec { path => [ "/bin/", "/sbin/", "/usr/bin/", "/usr/sbin/", "/usr/local/bin" ] }

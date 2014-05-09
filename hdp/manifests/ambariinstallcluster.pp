@@ -36,7 +36,6 @@ require hdp::ambariserver
         require => Class["hdp::ambariserver"],
     }
 
-  
   file{"/tmp/check_status.py":
     source => "puppet:///modules/hdp/check_status.py",
     require => Class["hdp::ambariserver"],
@@ -54,7 +53,7 @@ require hdp::ambariserver
  
 
   exec {"wait for ambari register hosts":
-    require => [File["/tmp/check-ambari-hosts.sh"],Class["hdp::ambariserver"],Class["hdp::ambariagent"]],
+    require => [Service['ambari-server'],File["/tmp/check-ambari-hosts.sh"],Class["hdp::ambariserver"],Class["hdp::ambariagent"]],
     command => "/bin/bash /tmp/check-ambari-hosts.sh",
     logoutput => true,  
    }
