@@ -1,0 +1,86 @@
+ drpc.childopts: "-Xmx768m"
+ drpc.queue.size: 128
+ drpc.request.timeout.secs: 600
+ drpc.worker.threads: 8
+ logviewer.childopts: "-Xmx256m"
+ logviewer.port: 8000
+ master.initial-num-supervisors: 4
+ nimbus.childopts: "-server -verbose:gc -Xloggc:<%= @storm_log_dir -%>/nimbus_gc.log -Xmx<%= @storm_nimbus_heap_size -%> -XX:-CMSConcurrentMTEnabled -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=70 -XX:ErrorFile=<%= @storm_log_dir -%>/nimbus_err_pid%p.log -XX:NewSize=<%= @storm_nimbus_new_size -%> -XX:ParallelGCThreads=<%= @storm_nimbus_parallelgcthreads -%> -Djava.net.preferIPv4Stack=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=<%= @storm_nimbus_jmxremote_port -%> -Dcom.sun.management.jmxremote.ssl=false -javaagent:<%= @storm_install_dir -%>/contrib/storm-jmxetric/lib/jmxetric-<%= @storm_nimbus_jmxetric_version -%>.jar=host=<%= @ganglia_host -%>,port=<%= @nimbus_ganglia_port -%>,wireformat31x=true,mode=unicast,config=/usr/lib/storm/contrib/storm-jmxetric/conf/jmxetric-conf.xml,process=<%= @storm_nimbus_jmx_process -%>"
+ nimbus.cleanup.inbox.freq.secs: 600
+ nimbus.file.copy.expiration.secs: 600
+ nimbus.host: "<%= @storm_nimbus_host %>"
+ nimbus.inbox.jar.expiration.secs: 3600
+ nimbus.monitor.freq.secs: 10
+ nimbus.reassign: true
+ nimbus.supervisor.timeout.secs: 60
+ nimbus.task.launch.secs: 120
+ nimbus.task.timeout.secs: 30
+ nimbus.thrift.port: 6627
+ nimbus.thrift.threads: 256
+ nimbus.topology.validator: backtype.storm.nimbus.DefaultTopologyValidator
+ storm.cluster.mode: distributed
+ storm.local.dir: "<%= @storm_data_dir %>"
+ storm.local.mode.zmq: false
+ storm.messaging.netty.buffer_size: 5242880
+ storm.messaging.netty.client_worker_threads: 1
+ storm.messaging.netty.max_retries: 30
+ storm.messaging.netty.max_wait_ms: 1000
+ storm.messaging.netty.min_wait_ms: 100
+ storm.messaging.netty.server_worker_threads: 1
+ storm.messaging.transport: backtype.storm.messaging.netty.Context
+ storm.thrift.transport: backtype.storm.security.auth.SimpleTransportPlugin
+ storm.zookeeper.connection.timeout: 15000
+ storm.zookeeper.port: <%= @storm_zookeeper_port %>
+ storm.zookeeper.retry.interval: 1000
+ storm.zookeeper.retry.intervalceiling.millis: 30000
+ storm.zookeeper.retry.times: 5
+ storm.zookeeper.root: <%= @storm_zookeeper_root %>
+ storm.zookeeper.servers:
+<% @storm_zookeeper_servers.each do |zk| -%>
+  - "<%= zk %>"
+<% end -%>
+ storm.zookeeper.session.timeout: 20000
+ supervisor.childopts: "-server -verbose:gc -Xloggc:<%= @storm_log_dir -%>/supervisor_gc.log -Xmx<%= @storm_supervisor_heap_size -%> -XX:-CMSConcurrentMTEnabled -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=70 -XX:ErrorFile=<%= @storm_log_dir -%>/supervisor_err_pid%p.log -XX:NewSize=<%= @storm_supervisor_new_size -%> -XX:ParallelGCThreads=<%= @storm_supervisor_parallelgcthreads -%> -Djava.net.preferIPv4Stack=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=6699 -javaagent:/usr/lib/storm/contrib/storm-jmxetric/lib/jmxetric-<%= @storm_supervisor_jmxetric_version -%>.jar=host=<%= @ganglia_host -%>,port=<%= @supervisor_ganglia_port -%>,wireformat31x=true,mode=unicast,config=/usr/lib/storm/contrib/storm-jmxetric/conf/jmxetric-conf.xml,process=Supervisor_JVM"
+ supervisor.enable: true
+ supervisor.heartbeat.frequency.secs: 5
+ supervisor.monitor.frequency.secs: 3
+ supervisor.slots.ports: 
+<% @storm_supervisor_slots_ports.each do |port| -%>
+  - <%= port %>
+<% end -%>
+ supervisor.worker.start.timeout.secs: 120
+ supervisor.worker.timeout.secs: 30
+ task.heartbeat.frequency.secs: 3
+ task.refresh.poll.secs: 10
+ topology.acker.executors: 8
+ topology.builtin.metrics.bucket.size.secs: 60
+ topology.debug: false
+ topology.disruptor.wait.strategy: com.lmax.disruptor.BlockingWaitStrategy
+ topology.enable.message.timeouts: true
+ topology.error.throttle.interval.secs: 10
+ topology.executor.receive.buffer.size: 1024
+ topology.executor.send.buffer.size: 1024
+ topology.fall.back.on.java.serialization: true
+ topology.kryo.factory: backtype.storm.serialization.DefaultKryoFactory
+ topology.max.error.report.per.interval: 5
+ topology.message.timeout.secs: 30
+ topology.optimize: true
+ topology.receiver.buffer.size: 1024
+ topology.skip.missing.kryo.registrations: false
+ topology.sleep.spout.wait.strategy.time.ms: 1
+ topology.spout.wait.strategy: backtype.storm.spout.SleepSpoutWaitStrategy
+ topology.state.synchronization.timeout.secs: 60
+ topology.stats.sample.rate: 0.05
+ topology.tasks: 8
+ topology.transfer.buffer.size: 1024
+ topology.trident.batch.emit.interval.millis: 500
+ topology.tuple.serializer: backtype.storm.serialization.types.ListDelegateSerializer
+ topology.worker.shared.thread.pool.size: 4
+ topology.workers: 8
+ ui.childopts: "-Xmx<%= @storm_ui_heap_size -%>"
+ ui.port: <%= @storm_ui_port %>
+ worker.childopts: "-server -verbose:gc -Xloggc:<%= @storm_log_dir -%>/worker_%ID%_gc.log -Xmx<%= @storm_worker_heap_size -%> -XX:-CMSConcurrentMTEnabled -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=70 -XX:ErrorFile=<%= @storm_log_dir -%>/worker_%ID%_err_pid%p.log -XX:NewSize=<%= @storm_worker_new_size -%> -XX:ParallelGCThreads=<%= @storm_worker_parallelgcthreads -%> -Djava.net.preferIPv4Stack=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=1%ID% -Dcom.sun.management.jmxremote.ssl=false -javaagent:<%= $storm_install_dir -%>/contrib/storm-jmxetric/lib/jmxetric-<%= @storm_worker_jmxetric_version -%>.jar=host=<%= @ganglia_host -%>,port=<%= @supervisor_ganglia_port -%>,wireformat31x=true,mode=unicast,config=/usr/lib/storm/contrib/storm-jmxetric/conf/jmxetric-conf.xml,process=Worker_%ID%_JVM"
+ worker.heartbeat.frequency.secs: 1
+ zmq.hwm: 0
+ zmq.linger.millis: 5000
+ zmq.threads: 1

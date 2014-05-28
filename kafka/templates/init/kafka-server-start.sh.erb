@@ -1,0 +1,28 @@
+#!/bin/bash
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if [ $# -lt 1 ];
+then
+        echo "USAGE: $0 server.properties"
+        exit 1
+fi
+base_dir=$(dirname $0)
+export LOG_DIR="<%= scope.lookupvar('kafka::params::log_dir') %>"
+export JMX_PORT=${JMX_PORT:-9093}
+export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
+export KAFKA_HEAP_OPTS="-Xmx4G -Xms4G"
+export KAFKA_JVM_PERFORMANCE_OPTS="-server -XX:NewSize=256m -XX:MaxNewSize=256m -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+UseCMSInitiatingOccupancyOnly -XX:+CMSConcurrentMTEnabled -XX:+CMSScavengeBeforeRemark -XX:CMSInitiatingOccupancyFraction=30 -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -Xloggc:${LOG_DIR}/kafka_broker_gc.log -XX:+UseCompressedOops -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Djava.net.preferIPv4Stack=true"
+exec $base_dir/kafka-run-class.sh daemon kafkaServer kafka.Kafka $@

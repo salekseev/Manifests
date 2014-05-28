@@ -1,0 +1,60 @@
+#!/bin/sh
+# chkconfig: 345 90 10
+# description: Zookeeper Startup Script
+# processname: java
+
+. /etc/rc.d/init.d/functions
+
+PIDFILE="<%= @zookeeper_data_dir -%>/zookeeper_server.pid"
+
+start() {
+  su - <%= @zookeeper_user %> -c "source <%= @zookeeper_config_dir %>/zookeeper-env.sh ; export ZOOCFGDIR=<%= @zookeeper_config_dir %>;<%= @zookeeper_install_dir %>/bin/zkServer.sh start >> <%= @zookeeper_log_dir %>/zoo.out 2>&1"
+}
+
+stop() {
+  su - <%= @zookeeper_user %> -c "source <%= @zookeeper_config_dir %>/zookeeper-env.sh ; export ZOOCFGDIR=<%= @zookeeper_config_dir %>;<%= @zookeeper_install_dir %>/bin/zkServer.sh stop"
+}
+
+status() {
+  if [ -f $PIDFILE ]; then
+    PID=`cat $PIDFILE`
+    if [ -z "`ps axf | grep ${PID} | grep -v grep`" ]; then
+      echo "PID Exists but Zookeeper is not running"
+      return 1
+    else
+      echo "Zookeeper is running with PID: ${PID}"
+      return 0
+    fi
+  else
+    echo "Service is not running"
+    return 1
+  fi
+}
+
+usage() {
+  echo "This script supports {start,stop,restart,status}"
+}
+
+case "$1" in
+
+    start)
+         start
+         ;;
+
+     stop)
+         stop
+         ;;
+
+  restart)
+         stop
+         start
+         ;;
+   status)
+         status
+         exit $?
+         ;;
+
+        *)
+         usage
+         ;;
+esac

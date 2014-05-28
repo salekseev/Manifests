@@ -1,0 +1,82 @@
+#!/bin/bash
+
+## CD to the scripts directory
+SCRIPTPATH=`dirname $0`
+#echo $SCRIPTPATH
+cd $SCRIPTPATH
+
+
+. ./jmxtrans_common.sh
+
+#set -x
+
+if [ $# -le 0 ] ;
+then 
+  echo "Usage: $0 <one or more of these services kafka-server|storm-nimbus|storm-supervisor|storm-worker>"
+  exit 1
+fi
+
+
+
+## Start a jmxtrans configuration file with the server array tags and later add server configurations to it.
+echo '{"servers":[' >  ${JSON_FILE}
+
+SERVICE_COUNTER=0
+
+for SERVICE_NAME in "$@"
+do
+
+  if [ "${SERVICE_NAME}" == "kafka-server" ] ;
+  then
+    export JSON_CONF_FILE_NAME=kafka_server_jmxtrans.json
+    export JMXTRANS_PROPERTIES_FILE_NAME=kafka_jmxtrans.properties
+  elif [  "${SERVICE_NAME}" == "storm-nimbus" ] ;
+  then
+    export JSON_CONF_FILE_NAME=storm_nimbus_jmxtrans.json
+    export JMXTRANS_PROPERTIES_FILE_NAME=storm_jmxtrans.properties
+  elif [ "${SERVICE_NAME}" == "storm-supervisor" ] ;
+  then
+    export JSON_CONF_FILE_NAME=storm_supervisor_jmxtrans.json
+    export JMXTRANS_PROPERTIES_FILE_NAME=storm_jmxtrans.properties
+  elif [ "${SERVICE_NAME}" == "storm-worker" ] ;
+  then
+    export JSON_CONF_FILE_NAME=storm_worker_jmxtrans.json
+    export JMXTRANS_PROPERTIES_FILE_NAME=storm_jmxtrans.properties
+  else 
+    echo "Usage: $0 <one or more of these services kafka-server|storm-nimbus|storm-supervisor|storm-worker>"
+    exit 1
+  fi
+
+  ## Add commas if adding more server configurations
+  if [ ${SERVICE_COUNTER} -gt 0 ];
+  then
+    echo "," >> ${JSON_FILE}
+  fi
+  SERVICE_COUNTER=$((SERVICE_COUNTER+1))
+
+
+
+  ## Add the service configuration to a common json file
+  cat ${CONF_DIR}/${JSON_CONF_FILE_NAME} >> 	${JSON_FILE} 
+  echo "Configuring jmxtrans for ${SERVICE_NAME}"
+
+  ## Replace all the placeholders with corresponding values    
+  while read line; do
+    key=`echo ${line}  | cut -d'=' -f1`
+    value=`echo ${line}  | cut -d'=' -f2`
+    echo "Setting ${key} to ${value}"
+    sed  -i "s/{${key}}/${value}/g" ${JSON_FILE} 
+  done < ${CONF_DIR}/${JMXTRANS_PROPERTIES_FILE_NAME}
+
+  ## Replace LOCAL_HOST with actual server names
+  sed -i "s/{LOCAL_HOST}/$(hostname -f)/g" ${JSON_FILE}
+
+
+
+done
+
+## Close the server array tags
+echo ']}' >>  ${JSON_FILE}
+
+echo "Starting jmxtrans service for ${SERVICE_NAME}"
+${JMXTRANS_HOME}/jmxtrans.sh start ${JSON_FILE}

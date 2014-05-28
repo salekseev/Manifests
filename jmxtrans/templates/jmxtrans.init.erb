@@ -1,0 +1,29 @@
+#!/bin/sh
+# chkconfig: 345 90 10
+# description: jmxtrans Startup Script
+# processname: java
+
+start() {
+  /usr/share/jmxtrans/bin/start_jmxtrans.sh kafka-server
+}
+
+stop() {
+  /usr/share/jmxtrans/bin/stop_jmxtrans.sh
+}
+
+usage() {
+  echo "This script supports {start,stop}"
+}
+
+case "$1" in
+
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  *)
+    usage
+    ;;
+esac

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+## CD to the scripts directory
+SCRIPTPATH=`dirname $0`
+#echo $SCRIPTPATH
+cd $SCRIPTPATH
+
+
+. ./jmxtrans_common.sh
+
+${JMXTRANS_HOME}/jmxtrans.sh stop

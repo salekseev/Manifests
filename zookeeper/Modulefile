@@ -1,0 +1,10 @@
+name    'zookeeper'
+version '1.0.0'
+source 'https://git.symcpe.net/projects/CIP/repos/com---ashburn/browse/zookeeper'
+author 'michael_brush@symantec.com'
+license 'Apache License, Version 2.0'
+summary 'Zookeeper Installation'
+description 'Installs Zookeeper using the HDP rpms and has configuration that is by default customized to the SPAAS scrum team in CPE'
+
+## Add dependencies, if any:
+dependency 'hdp-util', '>= 1.0.0'

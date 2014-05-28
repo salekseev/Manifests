@@ -1,0 +1,12 @@
+data_source "HDPZookeeper" <%= @master_node -%>:8660
+data_source "HDPSupervisor" <%= @master_node -%>:8661
+data_source "Kafka" <%= @master_node -%>:8663
+data_source "HDPNimbus" <%= @master_node -%>:8664
+
+RRAs "RRA:AVERAGE:0.5:1:244" "RRA:AVERAGE:0.5:24:244" "RRA:AVERAGE:0.5:168:244" "RRA:AVERAGE:0.5:672:244"      "RRA:AVERAGE:0.5:5760:374"
+
+gridname "<%= @grid -%>"
+
+setuid_username "<%= @user -%>"
+
+case_sensitive_hostnames 1
