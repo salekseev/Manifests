@@ -6,7 +6,7 @@
         type => "kafka"
         codec => multiline {
            # Grok pattern names are valid! :)
-           pattern => "^[%{TIMESTAMP_ISO8601}] "
+           pattern => "^%\[{TIMESTAMP_ISO8601}\] "
            negate => true
            what => previous
         }
@@ -15,7 +15,7 @@
 
 filter {
       grok {
-           pattern => "[%{TIMESTAMP_ISO8601:logdate}]%{SPACE}[%{LOGLEVEL:level}]%{SPACE}%{GREEDYDATA:message}"
+           pattern => "\[%{TIMESTAMP_ISO8601:logdate}\]%{SPACE}%{LOGLEVEL:level}%{SPACE}%{GREEDYDATA:message}"
       }
 
       # set level INFO by default
