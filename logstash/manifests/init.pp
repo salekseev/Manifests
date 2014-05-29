@@ -21,7 +21,9 @@
 #
 # Copyright 2014 Symantec, unless otherwise noted.
 #
-class logstash inherits logstash::params {
+class logstash {
+
+  include logstash::params
 
   if ! defined(Class["hdp-util"]) {
     class { "hdp-util": }
@@ -31,37 +33,37 @@ class logstash inherits logstash::params {
   } ->
   class { "logstash::directories": }
 
-  if ($logstash_storm_nimbus) {
+  if ($logstash::params::logstash_storm_nimbus) {
     class { "logstash::storm_nimbus":
       require => Class["logstash::directories"],
     }
   }
 
-  if ($logstash_storm_ui) {
+  if ($logstash::params::logstash_storm_ui) {
     class { "logstash::storm_ui":
       require => Class["logstash::directories"],
     }
   }
 
-  if ($logstash_storm_supervisor) {
+  if ($logstash::params::logstash_storm_supervisor) {
     class { "logstash::storm_supervisor":
       require => Class["logstash::directories"],
     }
   }
 
-  if ($logstash_storm_worker) {
+  if ($logstash::params::logstash_storm_worker) {
     class { "logstash::storm_worker":
       require => Class["logstash::directories"],
     }
   }
 
-  if ($logstash_zookeeper) {
+  if ($logstash::params::logstash_zookeeper) {
     class { "logstash::zookeeper":
       require => Class["logstash::directories"],
     }
   }
 
-  if ($logstash_kafka) {
+  if ($logstash::params::logstash_kafka) {
     class { "logstash::kafka":
       require => Class["logstash::directories"],
     }
