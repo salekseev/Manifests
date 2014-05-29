@@ -1,0 +1,45 @@
+ input {
+    file {
+        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+        path => "<%= @logstash_storm_ui_log_dir -%>/ui.log"
+        start_position => "beginning"
+        type => "ui"
+        codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+    }
+ }
+
+filter {
+      grok {
+           pattern => "%{TIMESTAMP_ISO8601:logdate}%{SPACE}%{DATA:classname}%{SPACE}\[%{LOGLEVEL:level}%{SPACE}]%{GREEDYDATA:message}"
+      }
+
+      # set level INFO by default
+      if ! ([level]) {
+          mutate {
+              add_field => [ "level", "INFO" ]
+          }
+      }
+
+      mutate {
+           add_field => [ "apikey", "<%= @logstash_storm_ui_apikey -%>" ]
+           add_field => [ "tenant_id", "<%= @logstash_storm_ui_tenantid -%>" ]
+      }
+
+
+      # CUSTOM SETTINGS
+
+          # drop if level is DEBUG or INFO
+          if ([level] == "INFO" or [level] == "DEBUG") {
+              drop { }
+          }
+}
+
+output {
+  stdout { debug => true debug_format => "<%= logstash_storm_ui_debug_format -%>" }
+  udp { host => "<%= @logstash_indexer -%>" port => "<%= @logstash_indexer_port -%>" }
+}

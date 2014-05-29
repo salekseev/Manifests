@@ -1,0 +1,45 @@
+ input {
+    file {
+        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+        path => "<%= @logstash_storm_worker_log_dir -%>/worker-*.log"
+        codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+        start_position => "beginning"
+        type => "worker"
+    }
+ }
+
+filter {
+      grok {
+           match => [ "message", "%{TIMESTAMP_ISO8601:logdate}%{SPACE}%{DATA:classname}%{SPACE}\[%{LOGLEVEL:level}%{SPACE}]%{GREEDYDATA:message}"]
+           overwrite => ["message"]
+      }
+
+      # set level INFO by default
+      if ! ([level]) {
+          mutate {
+              add_field => [ "level", "INFO" ]
+          }
+      }
+
+      mutate {
+           add_field => [ "apikey", "<%= @logstash_storm_worker_apikey -%>" ]
+           add_field => [ "tenant_id", "<%= @logstash_storm_worker_tenantid -%>" ]
+      }
+
+      # CUSTOM SETTINGS
+
+      # drop if level is DEBUG
+      if ([level] == "DEBUG") {
+          drop { }
+      }
+}
+
+output {
+  stdout { debug => true debug_format => "<%= @logstash_storm_worker_debug_format -%>" }
+  udp { host => "<%= @logstash_indexer -%>" port => "<%= @logstash_indexer_port -%>" }
+}
