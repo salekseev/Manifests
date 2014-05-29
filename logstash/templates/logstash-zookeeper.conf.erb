@@ -15,7 +15,7 @@
 
 filter {
       grok {
-           pattern => "%{TIMESTAMP_ISO8601:logdate}%{SPACE}%{GREEDYDATA:myid}%{SPACE}-%{SPACE}%{LOGLEVEL:level}%{SPACE}]%{GREEDYDATA:message}"
+           pattern => "%{TIMESTAMP_ISO8601:logdate}%{SPACE}\[%{DATA:myid}%{SPACE}] - %{LOGLEVEL:level}%{SPACE} %{GREEDYDATA:message}"
       }
 
       # set level INFO by default
