@@ -55,5 +55,16 @@ class logstash inherits logstash::params {
     }
   }
 
+  if ($logstash_zookeeper) {
+    class { "logstash::zookeeper":
+      require => Class["logstash::directories"],
+    }
+  }
+
+  if ($logstash_kafka) {
+    class { "logstash::kafka":
+      require => Class["logstash::directories"],
+    }
+  }
 
 }

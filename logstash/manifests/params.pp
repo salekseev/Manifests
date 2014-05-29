@@ -45,4 +45,20 @@ class logstash::params (
   $logstash_storm_worker_debug_format = "json",
   $logstash_storm_worker_heap         = "256m",
 
+  ### Zookeeper Configuration
+  $logstash_zookeeper              = false,
+  $logstash_zookeeper_log_dir      = "/var/log/zookeeper",
+  $logstash_zookeeper_apikey       = "2cc27f1d-fbf8-48d8-821d-fe182cd1622e",
+  $logstash_zookeeper_tenantid     = "7ea8403061b043de92f9bf140afb1fe3",
+  $logstash_zookeeper_debug_format = "json",
+  $logstash_zookeeper_heap         = "256m",
+
+  ### Kafka Configuration
+  $logstash_kafka              = false,
+  $logstash_kafka_log_dir      = "/var/log/kafka",
+  $logstash_kafka_apikey       = "2cc27f1d-fbf8-48d8-821d-fe182cd1622e",
+  $logstash_kafka_tenantid     = "7ea8403061b043de92f9bf140afb1fe3",
+  $logstash_kafka_debug_format = "json",
+  $logstash_kafka_heap         = "256m",
+
 ) { }
