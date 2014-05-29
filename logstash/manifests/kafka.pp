@@ -24,6 +24,7 @@ class logstash::kafka inherits logstash::params {
     hasstatus  => true,
     provider   => upstart,
     require    => File["/etc/init/logstash-kafka.conf"],
+    subscribe  => [File["/etc/init/logstash-kafka.conf"],File["${logstash_install_dir}/kafka.conf"]],
   }
 
 }

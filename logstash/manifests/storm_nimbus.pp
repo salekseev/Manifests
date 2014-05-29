@@ -24,6 +24,7 @@ class logstash::storm_nimbus inherits logstash::params {
     hasstatus  => true,
     provider   => upstart,
     require    => File["/etc/init/logstash-storm-nimbus.conf"],
+    subscribe  => [File["/etc/init/logstash-storm-nimbus.conf"],File["${logstash_install_dir}/storm_nimbus.conf"]],
   }
 
 }

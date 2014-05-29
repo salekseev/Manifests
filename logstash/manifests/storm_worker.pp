@@ -24,6 +24,7 @@ class logstash::storm_worker inherits logstash::params {
     hasstatus  => true,
     provider   => upstart,
     require    => File["/etc/init/logstash-storm-worker.conf"],
+    subscribe  => [File["/etc/init/logstash-storm-worker.conf"],File["${logstash_install_dir}/storm_worker.conf"]],
   }
 
 }

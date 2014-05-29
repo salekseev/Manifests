@@ -24,6 +24,7 @@ class logstash::zookeeper inherits logstash::params {
     hasstatus  => true,
     provider   => upstart,
     require    => File["/etc/init/logstash-zookeeper.conf"],
+    subscribe  => [File["/etc/init/logstash-zookeeper.conf"],File["${logstash_install_dir}/zookeeper.conf"]],
   }
 
 }

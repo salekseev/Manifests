@@ -24,6 +24,7 @@ class logstash::storm_supervisor inherits logstash::params {
     hasstatus  => true,
     provider   => upstart,
     require    => File["/etc/init/logstash-storm-supervisor.conf"],
+    subscribe  => subscribe  => [File["/etc/init/logstash-storm-supervisor.conf"],File["${logstash_install_dir}/storm_supervisor.conf"]],
   }
 
 }

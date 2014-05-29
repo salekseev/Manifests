@@ -24,6 +24,7 @@ class logstash::storm_ui inherits logstash::params {
     hasstatus  => true,
     provider   => upstart,
     require    => File["/etc/init/logstash-storm-ui.conf"],
+    subscribe  => subscribe  => [File["/etc/init/logstash-storm-ui.conf"],File["${logstash_install_dir}/storm_ui.conf"]],
   }
 
 }

@@ -59,6 +59,6 @@ class logstash::params (
   $logstash_kafka_apikey       = "2cc27f1d-fbf8-48d8-821d-fe182cd1622e",
   $logstash_kafka_tenantid     = "7ea8403061b043de92f9bf140afb1fe3",
   $logstash_kafka_debug_format = "json",
-  $logstash_kafka_heap         = "256m",
+  $logstash_kafka_heap         = "512m",
 
 ) { }
