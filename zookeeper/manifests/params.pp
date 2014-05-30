@@ -5,6 +5,7 @@ class zookeeper::params (
   $zookeeper_log_dir                   = "/data/vol2/app/logs/zookeeper",
   $zookeeper_log_dir_perms             = "0750",
   $zookeeper_log_dir_link              = "/var/log/zookeeper",
+  $zookeeper_data_log_dir              = "/data/vol2/zookeeper",
 
   $zookeeper_config_dir_perms          = "0750",
 
@@ -17,7 +18,7 @@ class zookeeper::params (
   $zookeeper_syncLimit                 = "5",
   $zookeeper_autopurge_snapRetainCount = "3",
   $zookeeper_autopurge_purgeInterval   = "6",
-  $zookeeper_data_dir                  = "/data/vol2/zookeeper",
+  $zookeeper_data_dir                  = "/data/vol1/app/zookeeper/data",
   $zookeeper_data_dir_perms            = "0750",
   $zookeeper_clientPort                = "2181",
 
