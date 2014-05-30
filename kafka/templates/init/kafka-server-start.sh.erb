@@ -20,9 +20,9 @@ then
         exit 1
 fi
 base_dir=$(dirname $0)
-export LOG_DIR="<%= scope.lookupvar('kafka::params::log_dir') %>"
+export LOG_DIR="<%= @kafka_log_dir %>"
 export JMX_PORT=${JMX_PORT:-9093}
 export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
-export KAFKA_HEAP_OPTS="-Xmx4G -Xms4G"
+export KAFKA_HEAP_OPTS="-Xmx<%= @kafka_heap_size -%> -Xms<%= @kafka_heap_size -%>"
 export KAFKA_JVM_PERFORMANCE_OPTS="-server -XX:NewSize=256m -XX:MaxNewSize=256m -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+UseCMSInitiatingOccupancyOnly -XX:+CMSConcurrentMTEnabled -XX:+CMSScavengeBeforeRemark -XX:CMSInitiatingOccupancyFraction=30 -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -Xloggc:${LOG_DIR}/kafka_broker_gc.log -XX:+UseCompressedOops -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Djava.net.preferIPv4Stack=true"
 exec $base_dir/kafka-run-class.sh daemon kafkaServer kafka.Kafka $@

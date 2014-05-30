@@ -10,8 +10,8 @@
 . /etc/rc.d/init.d/functions
 
 
-USER=kafka
-DAEMON_PATH=<%= @install_dir %>/kafka/bin
+USER=<%= @kafka_user %>
+DAEMON_PATH=<%= @kafka_install_dir -%>/kafka/bin
 DAEMON_NAME=kafka
 # Check that networking is up.
 #[ ${NETWORKING} = "no" ] && exit 0
@@ -23,7 +23,7 @@ case "$1" in
   start)
         # Start daemon.
         echo -n "Starting $DAEMON_NAME: ";echo
-        /bin/su $USER $DAEMON_PATH/kafka-server-start.sh <%= @install_dir %>/kafka/config/server.properties &
+        /bin/su $USER $DAEMON_PATH/kafka-server-start.sh <%= @kafka_install_dir %>/kafka/config/server.properties &
         ;;
   stop)
         # Stop daemons.

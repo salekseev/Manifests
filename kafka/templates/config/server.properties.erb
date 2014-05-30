@@ -21,7 +21,7 @@
 # brokers "name" and allows the broker to be moved to a different host/port without
 # confusing consumers. You can choose any number you like so long as it is unique.
 # DEFAULT VALUE: broker.id=
-broker.id=<%= @broker_id %>
+broker.id=<%= @kafka_broker_id %>
 
 
 
@@ -69,7 +69,7 @@ num.partitions=10
 # all this cluster's data under the path /chroot/path. Note that you must create this path
 # yourself prior to starting the broker and consumers must use the same connection string.
 # DEFAULT VALUE: zookeeper.connect=null
-zookeeper.connect=<%= @zookeeper_connect %>
+zookeeper.connect=<%= @kafka_zookeeper_connect %>
 
 # Zookeeper session timeout. If the server fails to heartbeat to zookeeper within this
 # period of time it is considered dead. If you set this too low the server may be falsely
