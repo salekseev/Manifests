@@ -1,4 +1,4 @@
-class zookeeper inherits zookeeper::params {
+class zookeeper {
 
   if ! defined(Class["hdp-util"]) {
     class { "hdp-util": }
