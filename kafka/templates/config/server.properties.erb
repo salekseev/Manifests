@@ -33,26 +33,25 @@ host.name=<%= @fqdn %>
 
 # The port on which the server accepts client connections.
 # DEFAULT VALUE: port=6667
-port=9092
+port=<%= @kafka_port %>
 
 
 # A comma-separated list of one or more directories in which Kafka data is stored. Each
 # new partition that is created will be placed in the directory which currently has the
 # fewest partitions.
 # DEFAULT VALUE: log.dirs=/tmp/kafka-logs
-log.dirs=/data/vol3/kafka,/data/vol4/kafka,/data/vol5/kafka,/data/vol6/kafka,/data/vol7/kafka,/data/vol8/kafka,/data/vol9/kafka,/data/vol10/kafka,/data/vol11/kafka,/data/vol12/kafka
-
+log.dirs=<%= @kafka_data_dirs.join(',') %>
 
 # Enable auto creation of topic on the server. If this is set to true then attempts to
 # produce, consume, or fetch metadata for a non-existent topic will automatically create
 # it with the default replication factor and number of partitions.
 # DEFAULT VALUE: auto.create.topics.enable=TRUE
-auto.create.topics.enable=false
+auto.create.topics.enable=<%= @kafka_auto_create_topics_enable %>
 
 
 # The default number of partitions per topic.
 # DEFAULT VALUE: num.partitions=1
-num.partitions=10
+num.partitions=<%= @kafka_data_dirs.size %>
 
 
 ############################# Zookeeper Settings #############################
@@ -69,24 +68,24 @@ num.partitions=10
 # all this cluster's data under the path /chroot/path. Note that you must create this path
 # yourself prior to starting the broker and consumers must use the same connection string.
 # DEFAULT VALUE: zookeeper.connect=null
-zookeeper.connect=<%= @kafka_zookeeper_connect %>
+zookeeper.connect=<%= @kafka_zookeeper_servers.map{ |kafka_zookeeper_server| "#{kafka_zookeeper_server}:#{@kafka_zookeeper_port}" }.join(':') %>
 
 # Zookeeper session timeout. If the server fails to heartbeat to zookeeper within this
 # period of time it is considered dead. If you set this too low the server may be falsely
 # considered dead; if you set it too high it may take too long to recognize a truly dead
 # server.
 # DEFAULT VALUE: zookeeper.session.timeout.ms=6000
-zookeeper.session.timeout.ms=10000
+zookeeper.session.timeout.ms=<%= @kafka_zookeeper_session_timeout_ms %>
 
 
 # The maximum amount of time that the client waits to establish a connection to zookeeper.
 # DEFAULT VALUE: zookeeper.connection.timeout.ms=6000
-zookeeper.connection.timeout.ms=10000
+zookeeper.connection.timeout.ms=<%= @kafka_zookeeper_connection_timeout_ms %>
 
 
 # How far a ZK follower can be behind a ZK leader.
 # DEFAULT VALUE: zookeeper.sync.time.ms=2000
-zookeeper.sync.time.ms=2000
+zookeeper.sync.time.ms=<%= @kafka_zookeeper_sync_time_ms %>
 
 ############################# Socket Server Settings #############################
 
@@ -100,19 +99,19 @@ message.max.bytes=1000000
 # The number of network threads that the server uses for handling network requests. You
 # probably don't need to change this.
 # DEFAULT VALUE: num.network.threads=3
-num.network.threads=10
+num.network.threads=<%= @kafka_num_network_threads %>
 
 
 # The number of I/O threads that the server uses for executing requests. You should have
 # at least as many threads as you have disks.
 # DEFAULT VALUE: num.io.threads=8
-num.io.threads=10
+num.io.threads=<%= @kafka_num_io_threads %>
 
 
 # The number of requests that can be queued up for processing by the I/O threads before
 # the network threads stop reading in new requests.
 # DEFAULT VALUE: queued.max.requests=500
-queued.max.requests=50
+queued.max.requests=<%= @kafka_queued_max_requests %>
 
 
 # The SO_SNDBUFF buffer the server prefers for socket connections.
@@ -148,7 +147,7 @@ log.segment.bytes=1073741824
 # This setting will force Kafka to roll a new log segment even if the log.segment.bytes
 # size has not been reached.
 # DEFAULT VALUE: log.roll.hours=24 * 7
-log.roll.hours=24
+log.roll.hours=<%= @kafka_log_roll_hours %>
 
 
 # This setting allows overriding log.roll.hours on a per-topic basis.
@@ -161,7 +160,7 @@ log.roll.hours=24
 # retention window for all topics. Note that if both log.retention.hours and
 # log.retention.bytes are both set we delete a segment when either limit is exceeded.
 # DEFAULT VALUE: log.retention.hours=24 * 7
-log.retention.hours=24
+log.retention.hours=<%= @kafka_log_retention_hours %>
 
 
 # A per-topic override for log.retention.hours.
@@ -185,7 +184,7 @@ log.retention.bytes=-1
 # The frequency in minutes that the log cleaner checks whether any log segment is eligible
 # for deletion to meet the retention policies.
 # DEFAULT VALUE: log.cleanup.interval.mins=10
-log.cleanup.interval.mins=60
+log.cleanup.interval.mins=<%= @kafka_log_cleanup_interval_mins %>
 
 
 # The maximum size in bytes we allow for the offset index for each log segment. Note that
@@ -250,7 +249,7 @@ controller.message.queue.size=10
 
 # The default replication factor for automatically created topics.
 # DEFAULT VALUE: default.replication.factor=1
-default.replication.factor=3
+default.replication.factor=<%= @kafka_default_replication_facter %>
 
 
 # If a follower hasn't sent any fetch requests for this window of time, the leader will
