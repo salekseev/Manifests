@@ -8,7 +8,7 @@ class jmxtrans {
     require => Class["hdp-util"],
   } ->
 
-  class { jmxtrans::config: }
-#  class { jmxtrans::service: }
+  class { jmxtrans::config: } ->
+  class { jmxtrans::service: }
 
 }
