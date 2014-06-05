@@ -4,11 +4,11 @@
 # processname: java
 
 start() {
-  /usr/share/jmxtrans/bin/start_jmxtrans.sh kafka-server
+  <%= @jmxtrans_home -%>/bin/start_jmxtrans.sh kafka-server
 }
 
 stop() {
-  /usr/share/jmxtrans/bin/stop_jmxtrans.sh
+  <%= @jmxtrans_hoem -%>/bin/stop_jmxtrans.sh
 }
 
 usage() {

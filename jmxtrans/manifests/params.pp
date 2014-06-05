@@ -1,10 +1,21 @@
 class jmxtrans::params (
 
-  $puppet_files_dir     = hiera('puppet_files_dir', '/etc/puppet/files'),
-  $jmxtrans_rpm_name    = hiera('jmxtrans_rpm_name', 'jmxtrans-20121016.noarch.rpm'),
-  $jmxtrans_home        = hiera('jmxtrans_home', '/usr/share/jmxtrans'),
-  $kafka_jmx_trans_port = hiera('kafka_jmx_trans_port', '9093'),
-  $ganglia_server_host  = hiera('ganglia_server_host'),
-  $ganglia_server_port  = hiera('ganglia_server_port', '8663'),
+  $jmxtrans_version     = "20121016.145842.6a28c97fbb-0",
+  $jmxtrans_home        = "/usr/share/jmxtrans",
+  $jmxtrans_user        = "jmxtrans",
+  $jmxtrans_group       = "jmxtrans",
+
+  $jmxtrans_log_dir       = "/var/log/jmxtrans",
+  $jmxtrans_log_dir_perms = "0750",
+
+  $jmxtrans_run_dir        = "/var/run/jmxtrans",
+  $jmxtrans_run_dir_perms  = "0750",
+
+  $jmxtrans_conf_dir_perms = "0750",
+  $jmxtrans_bin_dir_perms  = "0750",
+
+  $jmxtrans_kafka_jmx_trans_port = 9093,
+  $jmxtrans_ganglia_server_host  = undef,
+  $jmxtrans_ganglia_server_port  = 8663,
 
 ) { }

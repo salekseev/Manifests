@@ -1,55 +1,43 @@
 class jmxtrans::install inherits jmxtrans::params {
 
-  if ! defined(File[$puppet_files_dir]) {
-    file { $puppet_files_dir:
-      ensure => directory,
-      path   => $puppet_files_dir,
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0755',
-    }
+  package { "jmxtrans":
+    ensure   => $jmxtrans_version,
   }
 
-  file { 'jmxtrans-rpm':
-    ensure => file,
-    path   => "${puppet_files_dir}/${jmxtrans_rpm_name}",
-    source => "puppet:///modules/jmxtrans/${jmxtrans_rpm_name}",
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-    require => File[$puppet_files_dir],
+  file { $jmxtrans_log_dir:
+    ensure  => directory,
+    path    => $jmxtrans_log_dir,
+    owner   => $jmxtrans_user,
+    group   => $jmxtrans_group,
+    mode    => $jmxtrans_log_dir_perms,
+    require => Package["jmxtrans"],
   }
 
-  package { 'jmxtrans-20121016.145842.6a28c97fbb-0.noarch':
-    ensure   => installed,
-    provider => 'rpm',
-    alias    => 'jmxtrans-install',
-    source   => "${puppet_files_dir}/${jmxtrans_rpm_name}",
-    require  => File['jmxtrans-rpm'],
+  file { $jmxtrans_run_dir:
+    ensure  => directory,
+    path    => $jmxtrans_run_dir,
+    owner   => $jmxtrans_user,
+    group   => $jmxtrans_group,
+    mode    => $jmxtrans_run_dir_perms,
+    require => Package["jmxtrans"],
   }
 
-  file { 'log-dir':
-    ensure => directory,
-    path   => '/var/log/jmxtrans',
-    require => Package['jmxtrans-install'],
+  file { "${jmxtrans_home}/conf":
+    ensure  => directory,
+    path    => "${jmxtrans_home}/conf",
+    owner   => $jmxtrans_user,
+    group   => $jmxtrans_group,
+    mode    => $jmxtrans_conf_dir_perms,
+    require => Package["jmxtrans"],
   }
 
-  file { 'run-dir':
-    ensure => directory,
-    path   => '/var/run/jmxtrans',
-    require => Package['jmxtrans-install'],
+  file { "${jmxtrans_home}/bin":
+    ensure  => directory,
+    path    => "${jmxtrans_home}/bin",
+    owner   => $jmxtrans_user,
+    group   => $jmxtrans_group,
+    mode    => $jmxtrans_bin_dir_perms,
+    require => Package["jmxtrans"],
   }
-
-  file { 'conf-dir':
-    ensure => directory,
-    path   => "${jmxtrans_home}/conf",
-    require => Package['jmxtrans-install'],
-  }
-
-  file { 'bin-dir':
-    ensure => directory,
-    path   => "${jmxtrans_home}/bin",
-    require => Package['jmxtrans-install'],
-  } 
 
 }

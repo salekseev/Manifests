@@ -1,9 +1,14 @@
 class jmxtrans {
 
-  class { jmxtrans::repo: } ->
-  class { jmxtrans::java: } ->
-  class { jmxtrans::install: } ->
-  class { jmxtrans::config: } ->
-  class { jmxtrans::service: }
+  if ! defined(Class["hdp-util"]) {
+    class { "hdp-util": }
+  }
+
+  class { jmxtrans::install:
+    require => Class["hdp-util"],
+  } ->
+
+  class { jmxtrans::config: }
+#  class { jmxtrans::service: }
 
 }
