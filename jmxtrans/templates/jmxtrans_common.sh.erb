@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export PID_DIR=/var/run/jmxtrans
-export JMXTRANS_HOME=/usr/share/jmxtrans
+export PID_DIR=<%= @jmxtrans_run_dir %>
+export JMXTRANS_HOME=<%= @jmxtrans_home %>
 export CONF_DIR=${JMXTRANS_HOME}/conf
 export JAVA_HOME=/usr/java/default
-export LOG_DIR=/var/log/jmxtrans
+export LOG_DIR=<%= @jmxtrans_log_dir %>
 export JAR_FILE=${JMXTRANS_HOME}/jmxtrans-all.jar
 export JSON_FILE=${CONF_DIR}/jmxtrans.json
