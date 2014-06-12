@@ -1,0 +1,4 @@
+fixtures:
+  symlinks:
+    "resolv_conf": "#{source_dir}"
+

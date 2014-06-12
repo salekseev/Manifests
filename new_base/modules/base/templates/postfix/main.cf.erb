@@ -1,0 +1,16 @@
+alias_database = hash:/etc/postfix/aliases
+alias_maps = hash:/etc/postfix/aliases, hash:/etc/postfix/aliases.local
+debug_peer_level = 2
+inet_interfaces = all
+mail_owner = postfix
+mailq_path = /usr/bin/mailq.postfix
+mydestination = $myhostname, localhost.$mydomain, localhost
+relayhost = [<%= @smtprelay %>]
+mynetworks = 127.0.0.1
+mydomain = <%= @smtpdomain %>
+myorigin = $myhostname
+relay_domains = $mynetworks
+setgid_group = postdrop
+soft_bounce = no
+transport_maps = hash:/etc/postfix/transport.local, hash:/etc/postfix/transport
+unknown_local_recipient_reject_code = 550

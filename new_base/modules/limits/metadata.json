@@ -1,0 +1,31 @@
+{
+  "name": "saz-limits",
+  "version": "2.0.2",
+  "summary": "UNKNOWN",
+  "author": "saz",
+  "description": "Manage user limits via puppet",
+  "dependencies": [],
+  "types": [],
+  "checksums": {
+    ".bundle/config": "7f1c988748783d2a8d455376eed1470c",
+    ".gemfile": "14bd1a18be3e43568e7825c12a3dc0aa",
+    ".gemfile.lock": "11e8b5b81f25914ded3fdd0f62da0839",
+    ".travis.yml": "6acf366c1545cf0509d71e3ebedd9d27",
+    "LICENSE": "d6869a585931245be85fd4aece485172",
+    "Modulefile": "82233776a4a4570493449e217bdb01de",
+    "README.md": "0f414e91b4e00a9e5c783d5e7ffe5032",
+    "Rakefile": "0254db5d3fc38c67a2c160d7296a24f8",
+    "manifests/init.pp": "43c00cdf046330be3050cedab5751028",
+    "manifests/limits.pp": "79fc2f7787c4a6a286e96dd15f2d8795",
+    "manifests/params.pp": "e51370c6ca8771eaf1bfe46139fdf71c",
+    "spec/classes/limits_spec.rb": "291cbaca0a6a8953dafce86ef47c34d5",
+    "spec/defines/limits_spec.rb": "e7e27e251c965203f1a49ac95010d55d",
+    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+    "spec/spec_helper.rb": "0db89c9a486df193c0e40095422e19dc",
+    "templates/limits.erb": "3ea5229a171deb651626a48a849d5099",
+    "tests/init.pp": "9570020abdc649eec8e262523b039428"
+  },
+  "source": "UNKNOWN",
+  "project_page": "https://github.com/saz/puppet-limits",
+  "license": "Apache License, Version 2.0"
+}

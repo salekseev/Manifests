@@ -1,0 +1,32 @@
+{
+  "name": "ghoneycutt-nscd",
+  "version": "1.0.0",
+  "source": "git://github.com/ghoneycutt/puppet-module-nscd.git",
+  "author": "ghoneycutt",
+  "license": "Apache License, Version 2.0",
+  "summary": "manage NSCD - name service cache daemon",
+  "description": "Manage every aspect of NSCD - name service cache daemon",
+  "project_page": "https://github.com/ghoneycutt/puppet-module-nscd",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 3.2.0"
+    }
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "Gemfile": "701ce28001699d92765ebb030bd25809",
+    "Gemfile.lock": "35c884c7a07b617c1ba41bc36b0c6341",
+    "LICENSE": "3a9bf9d0813d3120d042e42b976bdc31",
+    "Modulefile": "19ac6fbf667a8a34b9b51dad3ccc39e1",
+    "README.md": "8b281c36d609777bb85547eb61c22909",
+    "Rakefile": "ced9fa032688fa636de4945b87017203",
+    "ext/check_readme.sh": "823c3156a908041d8173fc3ef3f95f2e",
+    "manifests/init.pp": "d5aa1eaa3c82ecba9b5b19cfb1b91203",
+    "spec/classes/init_spec.rb": "beba3b68b00854cc7a7b413aba0fdb1e",
+    "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
+    "templates/nscd.conf.erb": "1fb2af66bac60662db34581d4005fa24"
+  }
+}
