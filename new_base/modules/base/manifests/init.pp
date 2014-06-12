@@ -34,7 +34,7 @@ class base {
   include base::policy_profile	# disable/remove selinux/apparmor
   include base::limits_profile	# enable updating max open files et. al.
   include base::snmp_profile	# SNMP client ( minimal to enable monitoring )
-# include base::ssh		# latest pkgs, manage sshd_config
+  include base::ssh_profile	# latest pkgs, manage sshd_config
 # include base::sssd	 	# access management	
   include base::sudo_profile	# STOCK clean sudoers, + sudoers.d/default(s)
 # include base::sysctl		# Default kernel tuning settings (use hiera)
