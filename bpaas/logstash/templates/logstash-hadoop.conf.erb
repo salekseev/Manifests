@@ -1,0 +1,115 @@
+input {
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @logstash_hdfs_namenode_log_dir -%>/hadoop-hdfs-namenode-*.log"
+       start_position => "beginning"
+       type => "namenode"
+       codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+     } 
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @logstash_hdfs_datanode_log_dir -%>/hadoop-hdfs-datanode-*.log"
+       start_position => "beginning"
+       type => "datanode"
+       codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+     }
+
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @logstash_yarn_resourcemanager_log_dir -%>/yarn-yarn-resourcemanager-*.log"
+       start_position => "beginning"
+       type => "resourcemanager"
+       codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+     } 
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @logstash_yarn_nodemanager_log_dir -%>/yarn-yarn-nodemanager-*.log"
+       start_position => "beginning"
+       type => "nodemanager"
+       codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+     }
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @logstash_yarn_historyserver_log_dir -%>/yarn-yarn-historyserver-*.log"
+       start_position => "beginning"
+       type => "historyserver"
+       codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+     }
+  file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @logstash_MR_log_dir -%>/hadoop-mapreduce.jobsummary.log"
+       start_position => "beginning"
+       type => "jobsummary"
+       codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+     } 
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @logstash_oozie_log_dir -%>/oozie.log"
+       start_position => "beginning"
+       type => "oozieserver"
+       codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+     }
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @logstash_hive_log_dir -%>/hiveserver2.log"
+       start_position => "beginning"
+       type => "hiveserver"
+       codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{TIMESTAMP_ISO8601} "
+           negate => true
+           what => previous
+        }
+     }
+}
+
+filter {           
+   grok {
+       match => [ "message", "(?m)%{TIMESTAMP_ISO8601:date}%{SPACE}%{LOGLEVEL:level}%{SPACE}%{GREEDYDATA:code_line} - %{GREEDYDATA:message}" ]
+       overwrite => ["message"]
+   }
+   mutate {
+           add_field => [ "apikey", "<%= @logstash_api_key -%>" ]
+           add_field => [ "tenant_id", "<%= @logstash_tenant_id -%>" ]
+   }
+
+}
+output {
+  stdout { codec => "rubydebug" }
+  udp { host => "10.119.135.53" port => "6300" }
+}

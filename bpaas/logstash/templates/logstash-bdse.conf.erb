@@ -1,0 +1,71 @@
+input {
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb" 
+       path => "<%= @bdse_log_dir -%>/bdcp.log"
+       start_position => "beginning"
+       type => "bdse"
+       codec => multiline {
+           # Grok pattern names are valid! :)
+           pattern => "^%{LOGLEVEL}"
+           negate => true
+           what => previous
+        }
+   }
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @uwsgi_log_dir -%>/bdse_uwsgi_80.log"
+       start_position => "beginning"
+       type => "uwsgi"
+   }
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @nginx_log_dir -%>/access.log"
+       start_position => "beginning"
+       type => "nginx_access"
+   }
+   file {
+       sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
+       path => "<%= @nginx_log_dir -%>/error.log"
+       start_position => "beginning"
+       type => "nginx_error"
+   }
+}
+
+filter {   
+   if [type] == "bdse" {         
+       grok {
+           match => [ "message", "(?m)%{LOGLEVEL:level} %{GREEDYDATA:message}" ]
+           overwrite => ["message"]
+       }
+   }
+   else if [type] == "uwsgi" {
+       grok {
+           match => [ "message", "%{COMBINEDAPACHELOG}" ]
+           overwrite => ["message"]
+       }
+   }
+   else if [type] == "nginx_access" {
+       grok {
+           match => [ "message", "%{COMBINEDAPACHELOG}" ]
+           overwrite => ["message"]
+       }
+   }
+   else if [type] == "nginx_error" {
+       grok {
+           
+           match => [ "message", "%{DATESTAMP:date} \[%{LOGLEVEL:severity}\] %{POSINT:pid}#%{NUMBER}: %{GREEDYDATA:errormessage}" ]
+           overwrite => ["message"]
+       }
+   }
+
+   mutate {
+           add_field => [ "apikey", "<%= @logstash_api_key -%>" ]
+           add_field => [ "tenant_id", "<%= @logstash_tenant_id -%>" ]
+   }
+
+
+}
+output {
+  stdout { codec => "rubydebug" }
+  udp { host => "10.119.135.53" port => "6300" }
+}
