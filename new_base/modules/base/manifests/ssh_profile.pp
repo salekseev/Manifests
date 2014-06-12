@@ -15,7 +15,7 @@ class base::ssh_profile {
   }
 
   class { 'ssh::server':
-      storeconfigs_enabled => false,
+      storeconfigs_enabled => true,
       options => {
         'AllowTcpForwarding'     => 'yes',
         'X11Forwarding'          => 'yes',
