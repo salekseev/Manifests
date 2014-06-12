@@ -15,7 +15,7 @@ class base::ssh_profile {
   }
 
   class { 'ssh::server':
-      storeconfigs_enabled => true,
+      storeconfigs_enabled => false,
       options => {
         'AllowTcpForwarding'     => 'yes',
         'X11Forwarding'          => 'yes',
@@ -30,10 +30,7 @@ class base::ssh_profile {
         'GSSAPIAuthentication'   => 'yes',
         'GSSAPICleanupCredentials' => 'yes',
         'UsePAM'                 => 'yes',
-        'AcceptEnv'              => 'LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES',
-        'AcceptEnv'              => 'LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT',
-        'AcceptEnv'              => 'LC_IDENTIFICATION LC_ALL LANGUAGE',
-        'AcceptEnv'              => 'XMODIFIERS',
+        'AcceptEnv'              => 'LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT LC_IDENTIFICATION LC_ALL LANGUAGE XMODIFIERS',
       },
   }
 } # end of class
