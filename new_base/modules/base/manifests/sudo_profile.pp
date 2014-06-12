@@ -21,6 +21,11 @@ class base::sudo_profile {
     priority => 5,
     source   => 'puppet:///modules/base/sudoers.d/environment',
   }
+  # Default - all hosts have ADMINS access
+  sudo::conf { 'ADMINS':
+    priority => 10,
+    source   => 'puppet:///modules/base/sudoers.d/ADMINS',
+  }
   # Default - all hosts allow local wheel as convention
   sudo::conf { 'wheel':
     priority => 10,

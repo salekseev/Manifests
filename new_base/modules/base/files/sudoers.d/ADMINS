@@ -1,0 +1,6 @@
+### User Aliases
+User_Alias  ADMINS = bseitz, skolesnikowicz, bryan_seitz, sgibson, shane_gibson, stefan_kolesnikowicz, joe_decello
+
+### Aliases
+ADMINS                  ALL=(ALL)       ALL
+
