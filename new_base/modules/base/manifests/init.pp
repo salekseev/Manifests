@@ -35,7 +35,7 @@ class base {
   include base::limits_profile	# enable updating max open files et. al.
   include base::snmp_profile	# SNMP client ( minimal to enable monitoring )
   include base::ssh_profile	# latest pkgs, manage sshd_config
-# include base::sssd	 	# access management	
+# include base::sssd_profile 	# access management	
   include base::sudo_profile	# STOCK clean sudoers, + sudoers.d/default(s)
 # include base::sysctl		# Default kernel tuning settings (use hiera)
 # include base::sysstat		# enable SAR running every minute???
