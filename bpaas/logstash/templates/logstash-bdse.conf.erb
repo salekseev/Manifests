@@ -6,7 +6,7 @@ input {
        type => "bdse"
        codec => multiline {
            # Grok pattern names are valid! :)
-           pattern => "^%{LOGLEVEL}"
+           pattern => "^%{LOGLEVEL} "
            negate => true
            what => previous
         }
