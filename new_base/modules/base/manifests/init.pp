@@ -43,6 +43,7 @@ class base {
   include base::timezone_profile # UTC for all
 # include base::tools	  	# scripts and binaries not packaged, part of SV2
   include base::vim_profile 	# come on, its 2014~ and vi still rules
+  include base::lldp_profile 	# pkg, service for cdp\lldp neighbors discovery
 
 }
 # end of include base class
