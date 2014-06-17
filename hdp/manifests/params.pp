@@ -43,6 +43,8 @@ $AMBARISERVER_HOSTNAME = hiera('AMBARISERVER_HOSTNAME',''),
 
 $PASSWORD = hiera('PASSWORD','nji9(IJN'),
 $BACKUP_DIR = hiera('BACKUP_DIR','/applogs/'),
+$AMBARI_PASSWORD = hiera('AMBARI_PASSWORD','bigdata'),
+
 $BLUEPRINT_PATH = hiera('BLUEPRINT_PATH','/etc/ambari-server/conf/ambari-blueprint.conf.singlemaster'),
 $CLUSTER_CONF_PATH = hiera('CLUSTER_CONF_PATH','/etc/ambari-server/conf/ambari-clustertemplate.conf.singlemaster'),
 $CLUSTER_NAME = hiera('CLUSTER_NAME','hdpambariauto')

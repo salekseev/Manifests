@@ -31,4 +31,23 @@ class hdp::ambariserver()
       hasstatus  => false,
       require => Exec["ambariserver-setup"],	    
      }
+   
+  cron { 'ambaridb-backup':
+                ensure  => $ensure,
+                command => '/usr/local/sbin/ambaridbbackup.sh',
+                user    => 'root',
+                hour    => $time[0],
+                minute  => $time[1],
+                require => File['ambaridbbackup.sh'],
+        }
+
+   file { 'ambaridbbackup.sh':
+                ensure  => $ensure,
+                path    => '/usr/local/sbin/ambaridbbackup.sh',
+                mode    => '0700',
+                owner   => 'root',
+                group   => 'root',
+                content => template('hdp/ambaridbbackup.sh.erb'),
+        } 
+
 }
