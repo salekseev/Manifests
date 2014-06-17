@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Cleaning hadoop logs older than 30 days in all hadoop related folders on /var/log
+
+#"hcat_log_dir": "/var/log/webhcat",
+#"hive_log_dir": "/var/log/hive",
+
+
+cd <%= scope.lookupvar('logstash::params::ambari_agent_log_dir') %>
+find . -atime 30 -exec rm -f {} \;
+
+# Hive Logs  
+cd <%= scope.lookupvar('logstash::params::hive_log_dir') %>
+find . -atime 30 -exec rm -f {} \;
+
+# Webhcat Logs
+cd <%= scope.lookupvar('logstash::params::hcat_log_dir') %>
+find . -atime 30 -exec rm -f {} \;

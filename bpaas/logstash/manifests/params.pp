@@ -65,4 +65,18 @@ class logstash::params (
   ### Hive log Configuration
   $logstash_hive	         	= false,
   $hive_log_dir      			= "/appdata/log/hive",  
+
+  ### Hadoop Cleanup Params
+  $ambari_agent_log_dir	= "/var/log/ambari-agent/"
+  $ambari_server_log_dir = "/var/log/ambari-server/"
+  $hive_log_dir = "/var/log/hive/"
+  $hcat_log_dir = "/var/log/webhcat/"
+  $oozie_log_dir = "/var/log/oozie/"
+  $hdfs_log_dir_prefix = "/var/log/hadoop/hdfs"
+  $yarn_log_dir_prefix = "/var/log/hadoop-yarn/yarn"
+  $mapred_log_dir_prefix = "/var/log/hadoop-mapred/mapred/"
+  $zk_log_dir = "/var/log/zookeeper/"
+  
+    
+
 ) { }

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Cleaning hadoop logs older than 30 days in all hadoop related folders on /var/log
+
+#"hdfs_log_dir_prefix": "/var/log/hadoop/hdfs",
+
+
+# HDFS Logs
+cd <%= scope.lookupvar('logstash::params::ambari_agent_log_dir') %>
+find . -atime 30 -exec rm -f {} \;
+
+# Ambari-Agent Logs
+cd <%= scope.lookupvar('logstash::params::ambari_agent_log_dir') %> 
+find . -atime 30 -exec rm -f {} \;

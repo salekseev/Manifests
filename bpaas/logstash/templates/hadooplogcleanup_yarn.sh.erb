@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Cleaning hadoop logs older than 30 days in all hadoop related folders on /var/log
+
+#"mapred_log_dir_prefix": "/var/log/hadoop-mapreduce"
+#"yarn_log_dir_prefix": "/var/log/hadoop-yarn"
+#"ambari_agent_log_dir":"/var/log/ambari-agent"
+
+# Ambari-Agent Logs
+cd <%= scope.lookupvar('logstash::params::ambari_agent_log_dir') %>
+find . -atime 30 -exec rm -f {} \;
+
+# Yarn Server Logs
+cd <%= scope.lookupvar('logstash::params::yarn_log_dir_prefix') %>
+find . -atime 30 -exec rm -f {} \;
+
+# Job History-Server 
+cd <%= scope.lookupvar('logstash::params::mapred_log_dir_prefix') %>
+find . -atime 30 -exec rm -f {} \;
