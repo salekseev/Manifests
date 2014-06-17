@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Cleaning hadoop logs older than 30 days in all hadoop related folders on /var/log
+
+#"zk_log_dir": "/var/log/zookeeper"
+
+
+# Ambari-Agent Logs
+cd <%= scope.lookupvar('logstash::params::ambari_agent_log_dir') %>
+find . -atime 30 -exec rm -f {} \;
+
+# Zookeeper Logs 
+cd <%= scope.lookupvar('logstash::params::zk_log_dir') %>
+find . -atime 30 -exec rm -f {} \;
+
