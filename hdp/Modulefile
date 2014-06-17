@@ -1,0 +1,7 @@
+name    'hdp'
+version '1.0.0'
+source 'UNKNOWN'
+author 'saurabh_mishra@symantec.com'
+license 'Apache License, Version 2.0'
+description 'This puppet module is used to deploy Hortonworks Data Platform using Ambari'
+
