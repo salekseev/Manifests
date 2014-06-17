@@ -43,6 +43,8 @@ class lldp ($ensure       = 'present',
     ensure => $svc_ensure,
     enable => $svc_enable,
     require => File[$config_file_path],
+    hasstatus => false,
+    hasrestart => true,
   }
 
 }
