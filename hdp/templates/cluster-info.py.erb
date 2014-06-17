@@ -1,0 +1,12 @@
+[cluster-info]
+NAME_NODE = <%= scope.lookupvar('hdp::params::NAMENODE_HOSTNAME') %>
+NAMENODE_PORT = 50070
+SECONDARY_NAMENODE = <%= scope.lookupvar('hdp::params::STANDBYNAMENODE_HOSTNAME') %>
+SECONDARY_NAMENODE_PORT = 50070 
+
+OOZIE_NODE = <%= scope.lookupvar('hdp::params::OOZIE_HOSTNAME') %> 
+OOZIE_PORT = http://<%= scope.lookupvar('hdp::params::OOZIE_HOSTNAME') %>:11000
+
+HADOOP_LIB=/usr/lib/hadoop-mapreduce/
+HADOOP_BIN=/usr/bin/
+STREAMING_JAR=hadoop-streaming.jar

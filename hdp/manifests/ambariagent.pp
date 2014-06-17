@@ -41,12 +41,19 @@ class hdp::ambariagent()
 	require => Package['ambari-agent'],
     } 
     
+   file { '/usr/lib/python2.6/site-packages/resource_management/core/providers/accounts.py':
+	ensure => file,
+        mode => '755',
+        require => Package['ambari-agent'],
+	source => "puppet:///modules/hdp/accounts.py",
+    }
+    
     service { 'ambari-agent':
       ensure     => running,
       enable     => true,
       hasrestart => true,
       hasstatus  => true,
-      require    => File['/etc/ambari-agent/conf/ambari-agent.ini'],
+      require    => [File['/usr/lib/python2.6/site-packages/resource_management/core/providers/accounts.py'],File['/etc/ambari-agent/conf/ambari-agent.ini']],
     }
 
 }

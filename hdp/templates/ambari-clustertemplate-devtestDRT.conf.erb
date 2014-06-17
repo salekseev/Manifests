@@ -1,0 +1,88 @@
+{
+    "blueprint": "hadoop",
+    "host-groups": [
+        {
+            "name": "namenode_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::NAMENODE_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "namenode_ha_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::STANDBYNAMENODE_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "yarn_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::RESOURCEMANAGER_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "monitoring",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::MONITOR_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "hive_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::HIVE_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "oozie_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::OOZIE_HOSTNAME') %>"
+                }
+            ]
+        },
+	{
+            "name": "zookeeper_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::OOZIE_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "slaves",
+            "hosts": [
+<% scope.lookupvar('hdp::params::hdp_slaves').each do |slave| -%>
+<% if slave != scope.lookupvar('hdp::params::hdp_slaves').last -%>
+                 {
+                   "fqdn": "<%= slave %>"
+                 },
+<% else -%>
+                 {
+                   "fqdn": "<%= slave %>"
+                 }
+<% end -%>
+<% end -%>
+            ]
+        },
+        {
+            "name": "bdcp_baston",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::BDCP_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::BASTON_HOSTNAME') %>"
+                }
+            ]
+        }
+    ]
+}

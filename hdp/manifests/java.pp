@@ -2,7 +2,7 @@ class hdp::java()
 {
 
    package { 'jdk':
-	ensure => latest,
+	ensure => '1.7.0_51-fcs',
 	provider => 'yum',
 	name    =>  'jdk',
     }

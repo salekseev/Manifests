@@ -1,7 +1,7 @@
 class hdp::yum {
 yumrepo { 'hdp':
         descr      => "HDPrepo",
-        baseurl    => 'http://10.119.134.28/mrepo/horton/HDP-2.1.1.0',
+        baseurl    => 'http://10.119.134.28/mrepo/horton/HDP-2.1.2.1',
         enabled    => '1',
         gpgcheck   => '0',
         priority   => '1',
@@ -17,7 +17,7 @@ yumrepo { 'hdp-util':
     }
 yumrepo { 'ambari':
         descr      => "HDPambarirepo",
-        baseurl    => 'http://10.119.134.28/mrepo/horton/Updates-ambari-1.5.1',
+        baseurl    => 'http://10.119.134.28/mrepo/horton/Updates-ambari-1.6',
         enabled    => '1',
         gpgcheck   => '0',
         priority   => '1',

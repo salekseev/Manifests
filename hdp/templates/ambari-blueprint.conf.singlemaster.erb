@@ -19,7 +19,10 @@
                 "hive_database": "Existing MySQL Database",
                 "hive_database_type": "mysql",
                 "hive_existing_mysql_database": "MySQL",
-                "hive_hostname": "<%= scope.lookupvar('hdp::params::MYSQLSERVER_HOSTNAME') %>"
+                "hive_hostname": "<%= scope.lookupvar('hdp::params::MYSQLSERVER_HOSTNAME') %>",
+		"gmetad_user": "ganglia",
+		"gmond_user": "ganglia",
+		"mapred_user": "hdfs"
             }
         },
         {

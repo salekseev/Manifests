@@ -1,0 +1,153 @@
+{
+    "blueprint": "hadoop",
+    "host-groups": [
+        {
+            "name": "namenode_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::NAMENODE_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "namenode_ha_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::STANDBYNAMENODE_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "yarn_zookeeper_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::RESOURCEMANAGER_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "monitoring",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::MONITOR_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "hive_zookeeper_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::HIVE_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "oozie_zookeeper_server",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::OOZIE_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "slaves",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES1_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES2_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES3_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES4_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES5_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES6_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES7_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES8_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES9_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES10_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES11_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES12_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES13_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES14_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES15_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES16_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES17_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES18_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES19_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES20_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES21_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES22_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES23_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES24_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES25_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES26_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES27_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::SLAVES28_HOSTNAME') %>"
+                }
+            ]
+        },
+        {
+            "name": "bdcp_baston",
+            "hosts": [
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::BDCP_HOSTNAME') %>"
+                },
+                {
+                    "fqdn": "<%= scope.lookupvar('hdp::params::BASTON_HOSTNAME') %>"
+                }
+            ]
+        }
+    ]
+}

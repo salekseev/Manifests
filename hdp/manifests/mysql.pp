@@ -15,6 +15,15 @@ class hdp::mysql()
         provider => 'yum',
         name    =>  'mysql',
     }
+	
+   file { "/etc/my.cnf":
+                ensure => present,
+                source => "puppet:///modules/hdp/my.cnf",
+                owner => "root",
+                group => "root",
+                mode => 644,
+                require => Package['mysql-server'],
+    }
    
    file { "/tmp/mysql-serversetup.sh":
                 ensure => present,
@@ -22,7 +31,7 @@ class hdp::mysql()
                 owner => "root",
                 group => "root",
                 mode => 774,
-		require => Package['mysql-server'],
+		require => [File['/etc/my.cnf'],Package['mysql-server']],
     }
     
     file { "/tmp/setuphiveusers.sql":
@@ -45,8 +54,9 @@ class hdp::mysql()
 
     exec { "mysql-serversetup.sh":
  	        command => "/tmp/mysql-serversetup.sh",
-       		require => File['/tmp/mysql-serversetup.sh'],
+       		require => [File['/tmp/setuphiveusers.sql'],File['/tmp/setupoozieusers.sql'],File['/tmp/mysql-serversetup.sh']],
         	path    => "/tmp",
+		creates => '/tmp/mysql-server-setup.pid',
     		logoutput => true,
 	} 
    

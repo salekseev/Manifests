@@ -1,5 +1,6 @@
 class hdp::ambariinstallcluster()
 {
+
 include hdp::params
 require hdp::yum
 require hdp::java
@@ -47,15 +48,15 @@ require hdp::ambariserver
   }
   
  file {"/tmp/check-ambari-hosts.sh":
-    source => "puppet:///modules/hdp/check-ambari-hosts.sh",
+    content => template('hdp/check-ambari-hosts.sh.erb'),
     require => Class["hdp::ambariserver"],
   }
- 
 
   exec {"wait for ambari register hosts":
     require => [Service['ambari-server'],File["/tmp/check-ambari-hosts.sh"],Class["hdp::ambariserver"],Class["hdp::ambariagent"]],
     command => "/bin/bash /tmp/check-ambari-hosts.sh",
-    logoutput => true,  
+    logoutput => true, 
+    creates => '/tmp/ambari-check-ambariagent-register.pid', 
    }
 
  file {"/tmp/cluster_blueprint.py":
@@ -75,7 +76,8 @@ require hdp::ambariserver
  exec {"install cluster":
     command => "/tmp/ambari-install-cluster.sh",
     require => [File["/tmp/cluster_blueprint.py"],File["/etc/ambari-server/conf/ambari-blueprint.conf.singlemaster"],Class["hdp::ambariserver"],Exec["wait for ambari register hosts"]],
-    logoutput => true
+    logoutput => true,
+    creates => '/tmp/ambari-install-cluster.pid',
   }
 
 }

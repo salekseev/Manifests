@@ -1,0 +1,283 @@
+{
+    "configurations": [
+        {
+            "hdfs-site": {
+                "dfs.namenode.name.dir": "/data/hadoop/hdfs/namenode",
+                "dfs.datanode.data.dir": "/data/vol1/hadoop/hdfs/data,/data/vol10/hadoop/hdfs/data,/data/vol11/hadoop/hdfs/data,/data/vol12/hadoop/hdfs/data,/data/vol2/hadoop/hdfs/data,/data/vol3/hadoop/hdfs/data,/data/vol4/hadoop/hdfs/data,/data/vol5/hadoop/hdfs/data,/data/vol6/hadoop/hdfs/data,/data/vol7/hadoop/hdfs/data,/data/vol8/hadoop/hdfs/data,/data/vol9/hadoop/hdfs/data"
+            }
+        },
+        {
+            "yarn-site": {
+                "yarn.nodemanager.local-dirs": "/data/vol1/hadoop/yarn/log,/data/vol2/hadoop/yarn/log,/data/vol3/hadoop/yarn/log,/data/vol4/hadoop/yarn/log,/data/vol5/hadoop/yarn/log,/data/vol6/hadoop/yarn/log,/data/vol7/hadoop/yarn/log,/data/vol8/hadoop/yarn/log,/data/vol9/hadoop/yarn/log,/data/vol10/hadoop/yarn/log,/data/vol11/hadoop/yarn/log,/data/vol12/hadoop/yarn/log",
+                "yarn.nodemanager.log-dirs": "/data/vol1/hadoop/yarn/log,/data/vol2/hadoop/yarn/log,/data/vol3/hadoop/yarn/log,/data/vol4/hadoop/yarn/log,/data/vol5/hadoop/yarn/log,/data/vol6/hadoop/yarn/log,/data/vol7/hadoop/yarn/log,/data/vol8/hadoop/yarn/log,/data/vol9/hadoop/yarn/log,/data/vol10/hadoop/yarn/log,/data/vol11/hadoop/yarn/log,/data/vol12/hadoop/yarn/log"
+            }
+        },
+        {
+            "global": {
+                "namenode_heapsize": "12288m",
+                "resourcemanager_heapsize": "4096",
+                "hive_database": "Existing MySQL Database",
+                "hive_database_type": "mysql",
+                "hive_existing_mysql_database": "MySQL",
+                "hive_hostname": "<%= scope.lookupvar('hdp::params::AMBARISERVER_HOSTNAME') %>",
+		"gmetad_user": "ganglia",
+		"gmond_user": "ganglia",
+		"mapred_user": "hdfs",
+		"oozie_data_dir": "/hadoop/oozie/data",
+		"oozie_database": "Existing MySQL Database",
+		"oozie_database_type": "mysql",
+		"oozie_existing_mysql_database": "MySQL",
+		"oozie_log_dir": "/data/vol1/log/oozie",
+		"yarn_log_dir_prefix": "/data/vol1/log/hadoop-yarn",
+		"zk_log_dir": "/data/vol1/log/zookeeper",
+		"mapred_log_dir_prefix": "/data/vol1/log/hadoop-mapreduce",
+		"hive_log_dir": "/data/vol1/log/hive",
+		"hdfs_log_dir_prefix": "/data/vol1/log/hadoop",
+		"hcat_log_dir": "/data/vol1/log/webhcat",
+		"falcon_log_dir": "/data/vol1/log/falcon",
+		"oozie_pid_dir": "/var/run/oozie",
+		"oozie_user": "oozie",
+		"nagios_contact : "admin@localhost.com",
+		"nagios_web_password" : "<%= scope.lookupvar('hdp::params::PASSWORD') %>",
+		"hive_metastore_user_passwd" : "<%= scope.lookupvar('hdp::params::PASSWORD') %>",
+		"oozie_metastore_user_passwd" : "<%= scope.lookupvar('hdp::params::PASSWORD') %>"
+            }
+        },
+        {
+            "hive-site": {
+                "ambari.hive.db.schema.name": "hive",
+                "javax.jdo.option.ConnectionPassword": "<%= scope.lookupvar('hdp::params::PASSWORD') %>",
+                "javax.jdo.option.ConnectionURL": "jdbc:mysql://<%= scope.lookupvar('hdp::params::AMBARISERVER_HOSTNAME') %>/hive?createDatabaseIfNotExist=true",
+                "javax.jdo.option.ConnectionUserName": "hive",
+                "hive.metastore.uris": "thrift://<%= scope.lookupvar('hdp::params::AMBARISERVER_HOSTNAME') %>:9083"
+            }
+        },
+        {
+            "oozie-site": {
+                "oozie.db.schema.name": "oozie",
+		"oozie.service.AuthorizationService.security.enabled": "false",
+                "oozie.service.JPAService.jdbc.password": "<%= scope.lookupvar('hdp::params::PASSWORD') %>",
+                "oozie.service.JPAService.jdbc.url": "jdbc:mysql://<%= scope.lookupvar('hdp::params::AMBARISERVER_HOSTNAME') %>/oozie",
+                "oozie.service.JPAService.jdbc.username": "oozie",
+                "oozie.service.JPAService.jdbc.driver": "com.mysql.jdbc.Driver"
+            }
+        }
+    ],
+    "host_groups": [
+        {
+            "name": "oozie_server",
+            "components": [
+                {
+                    "name": "OOZIE_CLIENT"
+                },
+		{
+                    "name": "TEZ_CLIENT"
+                },
+                {
+                    "name": "OOZIE_SERVER"
+                },
+                {
+                    "name": "HDFS_CLIENT"
+                },
+                {
+                    "name": "YARN_CLIENT"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                }
+            ],
+            "cardinality": "1"
+        },
+        {
+            "name": "slaves",
+            "components": [
+                {
+                    "name": "NODEMANAGER"
+                },
+                {
+                    "name": "TEZ_CLIENT"
+                },
+		{
+                    "name": "DATANODE"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                }
+            ],
+            "cardinality": "${slavesCount}"
+        },
+        {
+            "name": "yarn_server",
+            "components": [
+                {
+                    "name": "HDFS_CLIENT"
+                },
+		{
+		    "name": "APP_TIMELINE_SERVER"
+		},
+		{
+                    "name": "TEZ_CLIENT"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                },
+                {
+                    "name": "RESOURCEMANAGER"
+                },
+                {
+                    "name": "HISTORYSERVER"
+                }
+            ],
+            "cardinality": "1"
+        },
+        {
+            "name": "bdcp_baston",
+            "components": [
+                {
+                    "name": "ZOOKEEPER_CLIENT"
+                },
+                {
+                    "name": "PIG"
+                },
+                {
+                    "name": "OOZIE_CLIENT"
+                },
+                {
+                    "name": "SQOOP"
+                },
+                {
+                    "name": "HIVE_CLIENT"
+                },
+		{
+                    "name": "TEZ_CLIENT"
+                },
+                {
+                    "name": "HDFS_CLIENT"
+                },
+                {
+                    "name": "YARN_CLIENT"
+                },
+                {
+                    "name": "HCAT"
+                },
+                {
+                    "name": "MAPREDUCE2_CLIENT"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                }
+            ],
+            "cardinality": "2"
+        },
+        {
+            "name": "monitoring",
+            "components": [
+                {
+                    "name": "AMBARI_SERVER"
+                },
+                {
+                    "name": "GANGLIA_SERVER"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                },
+                {
+                    "name": "NAGIOS_SERVER"
+                }
+            ],
+            "cardinality": "1"
+        },
+        {
+            "name": "hive_server",
+            "components": [
+                {
+                    "name": "ZOOKEEPER_CLIENT"
+                },
+                {
+                    "name": "HIVE_METASTORE"
+                },
+                {
+                    "name": "HIVE_SERVER"
+                },
+		{
+		    "name": "TEZ_CLIENT"
+		},
+                {
+                    "name": "HCAT"
+                },
+                {
+                    "name": "HIVE_CLIENT"
+                },
+                {
+                    "name": "HDFS_CLIENT"
+                },
+                {
+                    "name": "YARN_CLIENT"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                },
+                {
+                    "name": "WEBHCAT_SERVER"
+                }
+            ],
+            "cardinality": "1"
+        },
+        {
+            "name": "namenode_server",
+            "components": [
+                {
+                    "name": "NAMENODE"
+                },
+                {
+                    "name": "HDFS_CLIENT"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                }
+            ],
+            "cardinality": "1"
+        },
+	{
+	   "name": "zookeeper_server",
+	   "components": [
+		{
+		   "name": "ZOOKEEPER_SERVER"
+		},
+		{
+                   "name": "ZOOKEEPER_CLIENT"
+                },
+		{
+                   "name": "TEZ_CLIENT"
+                },
+		{
+                   "name": "HDFS_CLIENT"
+                },
+		{
+                   "name": "GANGLIA_MONITOR"
+                }
+	    ],
+	    "cardinality": "3"
+	}
+        {
+            "name": "namenode_ha_server",
+            "components": [
+                {
+                    "name": "SECONDARY_NAMENODE"
+                },
+                {
+                    "name": "HDFS_CLIENT"
+                },
+                {
+                    "name": "GANGLIA_MONITOR"
+                }
+            ],
+            "cardinality": "1"
+        }
+    ],
+    "Blueprints": {
+        "blueprint_name": "hadoop",
+        "stack_name": "HDP",
+        "stack_version": "2.1"
+    }
+}
