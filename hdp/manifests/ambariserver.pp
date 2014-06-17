@@ -1,4 +1,7 @@
-class hdp::ambariserver()
+class hdp::ambariserver(
+  $ensure = 'present',
+  $time = ['23', '5'],
+)
 {
     package { 'ambari-serverinstall':
         	ensure => latest,
