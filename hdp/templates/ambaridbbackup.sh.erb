@@ -5,4 +5,4 @@ PASS='<%= scope.lookupvar('hdp::params::AMBARI_PASSWORD') %>'
 DIR= <%= scope.lookupvar('hdp::params::BACKUP_DIR') %>
 
 export PGPASSWORD='$PASS'
-pg_dump -Fp -h `hostname -f` -U ambari ambari > ${DIR}/ambari_`date +%Y%m%d-%H%M%S`.sql
+pg_dump -Fp -h `hostname -f` -U ambari ambari > ${DIR}/ambari_`date +%Y%m%d-%H%M%S`.pql
