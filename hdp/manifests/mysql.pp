@@ -1,4 +1,7 @@
-class hdp::mysql()
+class hdp::mysql(
+  $ensure = 'present',
+  $time = ['23', '5'],
+ )
 {
    include hdp::params
    require hdp::yum
@@ -59,5 +62,22 @@ class hdp::mysql()
 		creates => '/tmp/mysql-server-setup.pid',
     		logoutput => true,
 	} 
-   
+    
+   cron { 'mysql-backup':
+    		ensure  => $ensure,
+    		command => '/usr/local/sbin/mysqlbackup.sh',
+    		user    => 'root',
+    		hour    => $time[0],
+    		minute  => $time[1],
+    		require => File['mysqlbackup.sh'],
+  	}
+
+   file { 'mysqlbackup.sh':
+    		ensure  => $ensure,
+    		path    => '/usr/local/sbin/mysqlbackup.sh',
+    		mode    => '0700',
+    		owner   => 'root',
+    		group   => 'root',
+    		content => template('hdp/mysqlbackup.sh.erb'),
+  	} 
 }

@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# MySQL Backup Script
+#  Dumps mysql hive and oozie databases to a file for another backup tool to pick up.
+#
+
+PASS='<%= scope.lookupvar('hdp::params::PASSWORD') %>'
+DIR= <%= scope.lookupvar('hdp::params::BACKUP_DIR') %>
+
+mysqldump -u hive -p${PASSWORD} --opt --flush-logs --single-transaction hive -h `hostname -f` > ${DIR}/${PREFIX}${hive}_`date +%Y%m%d-%H%M%S`.sql
+mysqldump -u oozie -p${PASSWORD} --opt --flush-logs --single-transaction oozie -h `hostname -f` > ${DIR}/${PREFIX}${oozie}_`date +%Y%m%d-%H%M%S`.sql
