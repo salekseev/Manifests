@@ -12,6 +12,7 @@ class logstash::params (
   $logstash_api_key		= "5afa20f9-09c8-4066-9b67-bfcd9aec1f0b",
   $logstash_tenant_id	= "17bbe11a3bbc495ca61034f72fda1453",
   $logstash_heap			= "256m",
+  $lmm_broker_list 	= "10.50.130.47:9092, 10.50.130.48:9092, 10.50.130.49:9092",
  
   ### Configuration parameters that are used but not configured. Do not change unless they are needed because the rpm changes
   $logstash_install_dir = "/opt/logstash",

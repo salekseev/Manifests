@@ -67,5 +67,8 @@ filter {
 }
 output {
   stdout { codec => "rubydebug" }
-  udp { host => "10.119.135.53" port => "6300" }
+  kafka {
+	   broker_list => "<%= lmm_broker_list -%>"
+           topic_id => "logTopic"
+        }
 }
