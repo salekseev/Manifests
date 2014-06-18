@@ -11,34 +11,17 @@ class logstash::package {
 #  }
 #
 
-
-
-exec {'Downloadjq':
-        command =>'wget http://stedolan.github.io/jq/download/linux64/jq -P /tmp',
-        path => ['/usr/bin'],
-  }
-  
-exec {'Movejq':
-      command => '/bin/mv /tmp/jq /usr/local/sbin',
-      onlyif => "/usr/bin/test -f /tmp/jq",
-      require  => EXEC["Downloadjq"],
- }
-
-file {"/usr/local/sbin/jq":
-      mode => 755,
-      require => Exec["Movejq"],
+# copy a remote file to /etc/sudoers
+file { "/usr/local/sbin/jq":
+    mode   => 755,
+    source => "puppet:///modules/logstash/jq"
 }
 
-exec {'Downloadjar':
-        command =>'wget https://download.elasticsearch.org/logstash/logstash/logstash-1.3.3-flatjar.jar -P /tmp',
-        path => ['/usr/bin'],
-  }
-  
-exec {'Movejar':
-      command => '/bin/mv /tmp/logstash-1.3.3-flatjar.jar /opt/logstash',
-      onlyif => "/usr/bin/test -f /tmp/logstash-1.3.3-flatjar.jar",
-      require  => EXEC["Downloadjar"],
-      path => ['/usr/bin', '/bin'],
- }
+
+# copy a remote file to /opt/logstash
+file { "/opt/logstash/logstash/logstash-1.3.3-flatjar.jar":
+    mode   => 755,
+    source => "puppet:///modules/logstash/logstash/logstash-1.3.3-flatjar.jar"
+}
 
 }
