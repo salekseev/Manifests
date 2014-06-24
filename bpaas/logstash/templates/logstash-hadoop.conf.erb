@@ -114,7 +114,7 @@ filter {
 }
 
 output {
-  stdout { codec => "rubydebug" }
+#  stdout { codec => "rubydebug" }
   kafka {
 	   broker_list => "<%= @lmm_broker_list -%>"
            topic_id => "logTopic"
