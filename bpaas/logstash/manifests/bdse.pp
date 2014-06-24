@@ -1,6 +1,6 @@
 class logstash::bdse inherits logstash::params {
 
-  file { "${logstash_install_dir}/bdse.conf":
+  file { "${logstash_install_dir}/conf/bdse.conf":
     ensure  => present,
     owner   => $logstash_user,
     group   => $logstash_group,
@@ -14,7 +14,7 @@ class logstash::bdse inherits logstash::params {
     group   => $logstash_group,
     mode    => "0644",
     content => template("logstash/logstash-bdse.upstart.erb"),
-    require => File["${logstash_install_dir}/bdse.conf"],
+    require => File["${logstash_install_dir}/conf/bdse.conf"],
   }
 
   service { "logstash-bdse":
@@ -24,7 +24,7 @@ class logstash::bdse inherits logstash::params {
     hasstatus  => true,
     provider   => upstart,
     require    => File["/etc/init/logstash-bdse.conf"],
-    subscribe  => [File["/etc/init/logstash-bdse.conf"], File["${logstash_install_dir}/bdse.conf"]],
+    subscribe  => [File["/etc/init/logstash-bdse.conf"], File["${logstash_install_dir}/conf/bdse.conf"]],
   }
 
 }

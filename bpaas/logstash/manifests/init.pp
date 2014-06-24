@@ -23,9 +23,9 @@
 #
 class logstash {
 
-  file { "/opt/logstash":
-        ensure => "directory",
-  }
+#  file { "/opt/logstash":
+#        ensure => "directory",
+#  }
 
   include logstash::directories
   include logstash::params

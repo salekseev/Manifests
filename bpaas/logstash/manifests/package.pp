@@ -8,7 +8,8 @@ file { "/tmp/logstash-1.4.0.tar.gz":
 
 # untar the file into /opt
 exec { "untar logstash":
-	command => "tar xzf /tmp/logstash-1.4.0.tar.gz -C /opt",
+	command => "/bin/tar xzf /tmp/logstash-1.4.0.tar.gz -C /opt",
+	require => FILE["/tmp/logstash-1.4.0.tar.gz"],
      } 
 
 #Create the required link

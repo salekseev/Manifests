@@ -1,7 +1,7 @@
 input {
    file {
        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
-       path => "<%= @logstash_hdfs_namenode_log_dir -%>/hadoop-hdfs-namenode-*.log"
+       path => "<%= @hdfs_namenode_log_dir -%>/hadoop-hdfs-namenode-*.log"
        start_position => "beginning"
        type => "namenode"
        codec => multiline {
@@ -13,7 +13,7 @@ input {
      } 
    file {
        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
-       path => "<%= @logstash_hdfs_datanode_log_dir -%>/hadoop-hdfs-datanode-*.log"
+       path => "<%= @hdfs_datanode_log_dir -%>/hadoop-hdfs-datanode-*.log"
        start_position => "beginning"
        type => "datanode"
        codec => multiline {
@@ -26,7 +26,7 @@ input {
 
    file {
        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
-       path => "<%= @logstash_yarn_resourcemanager_log_dir -%>/yarn-yarn-resourcemanager-*.log"
+       path => "<%= @yarn_resourcemanager_log_dir -%>/yarn-yarn-resourcemanager-*.log"
        start_position => "beginning"
        type => "resourcemanager"
        codec => multiline {
@@ -38,7 +38,7 @@ input {
      } 
    file {
        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
-       path => "<%= @logstash_yarn_nodemanager_log_dir -%>/yarn-yarn-nodemanager-*.log"
+       path => "<%= @yarn_nodemanager_log_dir -%>/yarn-yarn-nodemanager-*.log"
        start_position => "beginning"
        type => "nodemanager"
        codec => multiline {
@@ -50,7 +50,7 @@ input {
      }
    file {
        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
-       path => "<%= @logstash_yarn_historyserver_log_dir -%>/yarn-yarn-historyserver-*.log"
+       path => "<%= @yarn_historyserver_log_dir -%>/yarn-yarn-historyserver-*.log"
        start_position => "beginning"
        type => "historyserver"
        codec => multiline {
@@ -62,7 +62,7 @@ input {
      }
   file {
        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
-       path => "<%= @logstash_MR_log_dir -%>/hadoop-mapreduce.jobsummary.log"
+       path => "<%= @MR_log_dir -%>/hadoop-mapreduce.jobsummary.log"
        start_position => "beginning"
        type => "jobsummary"
        codec => multiline {
@@ -74,7 +74,7 @@ input {
      } 
    file {
        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
-       path => "<%= @logstash_oozie_log_dir -%>/oozie.log"
+       path => "<%= @oozie_log_dir -%>/oozie.log"
        start_position => "beginning"
        type => "oozieserver"
        codec => multiline {
@@ -86,7 +86,7 @@ input {
      }
    file {
        sincedb_path => "<%= @logstash_install_dir -%>/.sincedb"
-       path => "<%= @logstash_hive_log_dir -%>/hiveserver2.log"
+       path => "<%= @hive_log_dir -%>/hiveserver2.log"
        start_position => "beginning"
        type => "hiveserver"
        codec => multiline {
@@ -100,12 +100,15 @@ input {
 
 filter {           
    grok {
-       match => [ "message", "(?m)%{TIMESTAMP_ISO8601:date}%{SPACE}%{LOGLEVEL:level}%{SPACE}%{GREEDYDATA:code_line} - %{GREEDYDATA:message}" ]
+       match => [ "message", ""(?m)%{YEAR:yr}-%{MONTHNUM:mnth}-%{MONTHDAY:day}[T ]%{HOUR:hr}:?%{MINUTE:min}(?::?%{SECOND:se})?%{ISO8601_TIMEZONE:z}?%{SPACE}%{LOGLEVEL:level}%{SPACE}%{GREEDYDATA:code_line} - %{GREEDYDATA:message}" ]
        overwrite => ["message"]
    }
    mutate {
            add_field => [ "apikey", "<%= @logstash_api_key -%>" ]
            add_field => [ "tenant_id", "<%= @logstash_tenant_id -%>" ]
+           split => ["se", ","]
+           add_field => ["timestamp", "%{yr}-%{mnth}-%{day} %{hr}:%{min}:%{se[0]}.%{se[1]}"]
+           remove_field => ["se", "yr", "mnth", "day", "hr", "min"]
    }
 
 }
@@ -113,7 +116,7 @@ filter {
 output {
   stdout { codec => "rubydebug" }
   kafka {
-	   broker_list => "<%= lmm_broker_list -%>"
+	   broker_list => "<%= @lmm_broker_list -%>"
            topic_id => "logTopic"
         }
 }

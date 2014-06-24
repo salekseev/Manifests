@@ -1,6 +1,6 @@
 class logstash::hadoop inherits logstash::params {
 
-  file { "${logstash_install_dir}/hadoop.conf":
+  file { "${logstash_install_dir}/conf/hadoop.conf":
     ensure  => present,
     owner   => $logstash_user,
     group   => $logstash_group,
@@ -14,7 +14,7 @@ class logstash::hadoop inherits logstash::params {
     group   => $logstash_group,
     mode    => "0644",
     content => template("logstash/logstash-hadoop.upstart.erb"),
-    require => File["${logstash_install_dir}/hadoop.conf"],
+    require => File["${logstash_install_dir}/conf/hadoop.conf"],
   }
 
   service { "logstash-hadoop":
@@ -24,7 +24,7 @@ class logstash::hadoop inherits logstash::params {
     hasstatus  => true,
     provider   => upstart,
     require    => File["/etc/init/logstash-hadoop.conf"],
-    subscribe  => [File["/etc/init/logstash-hadoop.conf"], File["${logstash_install_dir}/hadoop.conf"]],
+    subscribe  => [File["/etc/init/logstash-hadoop.conf"], File["${logstash_install_dir}/conf/hadoop.conf"]],
   }
 
 }

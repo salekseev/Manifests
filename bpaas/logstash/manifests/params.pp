@@ -9,8 +9,8 @@ class logstash::params (
   $logstash_conf_perms    = "0644",
   $logstash_user          = "root",
   $logstash_group         = "root",
-  $logstash_api_key		= "5afa20f9-09c8-4066-9b67-bfcd9aec1f0b",
-  $logstash_tenant_id	= "17bbe11a3bbc495ca61034f72fda1453",
+  $logstash_api_key		= "7bac8de7-31d0-4222-bf00-bb107fa0d69e",
+  $logstash_tenant_id	= "91621e6c1c8f4279a2f1c6f544c620a7",
   $logstash_heap			= "256m",
   $lmm_broker_list 	= "10.50.130.47:9092, 10.50.130.48:9092, 10.50.130.49:9092",
  

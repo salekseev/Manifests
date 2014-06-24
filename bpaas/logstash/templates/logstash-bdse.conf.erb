@@ -68,7 +68,7 @@ filter {
 output {
   stdout { codec => "rubydebug" }
   kafka {
-	   broker_list => "<%= lmm_broker_list -%>"
+	   broker_list => "<%= @lmm_broker_list -%>"
            topic_id => "logTopic"
         }
 }
