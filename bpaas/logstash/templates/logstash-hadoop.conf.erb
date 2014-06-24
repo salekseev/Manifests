@@ -100,7 +100,7 @@ input {
 
 filter {           
    grok {
-       match => [ "message", ""(?m)%{YEAR:yr}-%{MONTHNUM:mnth}-%{MONTHDAY:day}[T ]%{HOUR:hr}:?%{MINUTE:min}(?::?%{SECOND:se})?%{ISO8601_TIMEZONE:z}?%{SPACE}%{LOGLEVEL:level}%{SPACE}%{GREEDYDATA:code_line} - %{GREEDYDATA:message}" ]
+       match => [ "message", "(?m)%{YEAR:yr}-%{MONTHNUM:mnth}-%{MONTHDAY:day}[T ]%{HOUR:hr}:?%{MINUTE:min}(?::?%{SECOND:se})?%{ISO8601_TIMEZONE:z}?%{SPACE}%{LOGLEVEL:level}%{SPACE}%{GREEDYDATA:code_line} - %{GREEDYDATA:message}" ]
        overwrite => ["message"]
    }
    mutate {
